@@ -1,0 +1,201 @@
+#
+# Copyright 2021 International Business Machines
+# 
+# License: Apache 2.0
+#
+#----------------------------------------------------------------------
+# schales@us.ibm.com
+#
+# Format:
+#    regex,tag,result,flags
+#
+#   Regex - regular expression to match
+#   tag - The tag for the collected data
+#       Specials:  +wrap... grab next line as well
+#                  @nslist... pull name servers from multiple lines
+#                  @join... pull rest of data
+#   result - The result to return.  %# (%1, %2, etc) are replaced with
+#             captured data using () in the regex.
+#   flags - Edits to perform
+#            U - uppercase result
+#            L - lowercase result
+#            M - Map result using maps defined below
+#------------------------------------------------------------------------
+# Mappings for records with M flag... each mapping starts with '#='
+#
+#=UNITED STATES=US
+#=CHINA=CN
+#=NETHERLANDS=NL
+#=UNITED KINGDOM=UK
+#=PANAMA=PA
+#=GERMANY=DE
+#=MALAYSIA=MY
+#=REPUBLIC OF KOREA=KO
+#=UNITED ARAM EMIRATES=UA
+#=POLAND=PL
+#=SPAIN=ES
+#=MEXICO=MX
+#=CROATIA/HRVATSKA=HR
+#=KOR=KO
+#=PORTUGAL=PT
+#=AUSTRALIA=AU
+#
+#!whois=registrar
+#!registered=created
+#
+^\s*Registrant:\s*$,+wrap,,
+^\s*Registrant:\s*Name:\s*(.*)$,registrant,%1
+^\s*Registrant:\s*([^:]*)\s*$,registrant,%1
+#
+# Not sure about this one... this is Moniker specific
+# Need to check to see if this number is useful for linking
+# registrations by the same person. -- dls
+#
+^\s*Registrant\s\[(\d+)\]:,registrant,%1
+^\s*Registrar:\s*$,+wrap,,
+^\s*Registrar:\s*Website:\s*(.*),registrar,%1
+^\s*No match for ,error,NXDOMAIN
+^%ERROR:.* no entries found,error,NXDOMAIN
+^\s*the Domain Name you apply can not be,error,UNAVAILABLE
+^\s*Name Server\s*\.+\s*(\S+),@nslist,%1
+^\s*Registrar IANA ID:\s*(\d+),ianaid,%1
+^\s*Sponsoring Registrar IANA ID:\s*(\d+),ianaid,%1
+^\s*Registrar:\s*Name:\s*(\S+.*),registrar,%1
+^\s*Registrar:\s*(\S+.*),registrar,%1
+^\s*Name Server:\s*(\S+.*),ns,%1
+^\s*Updated Date\s*:\s*(\S+.*),updated,%1
+^\s*Updated:\s*(\S+.*),updated,%1
+^\s*Creation Date\s*:\s*(\S+.*),created,%1
+^\s*Expiration Date\s*:\s*(\S+.*),expires,%1
+^\s*Registration Date\s*:\s*(\S+.*),registered,%1
+^\s*RegDate:\s*(\S+.*),registered,%1
+^\s*Registration Time\s*:\s*(\S+),registered,%1
+^\s*Expiration Time\s*:\s*(\S+),expires,%1
+^\s*Domain record activated:\s*(\S+),created,%1
+^\s*Domain record last updated:\s*(\S+),updated,%1
+^\s*Domain expires:\s*(\S+),expires,%1
+^nserver:\s*(\S+).*,ns,%1
+^registrar:\s*(\S+.*),registrar,%1
+^created:\s*(\S+.*),created,%1
+^free-date:\s*(\S+.*),expires,%1
+^\s*Creation Date\.*\s(\S+.*),created,%1
+^\s*Registration Date\.*.*\s(\S+.*),registered,%1
+^\s*Expiry Date\.*\s(\S+.*),expires,%1
+^\s*Name Server\.*\s(\S+.*),ns,%1
+^\s*Registrar Name:\s(\S+.*),registrar,%1
+^\s*Created [Oo]n\.*:\s*(\S+.*),created,%1
+^\s*Expires [Oo]n\.*:\s*(\S+.*),expires,%1
+^\s*Record last updated on\.*:* (\S+.*),updated,%1
+^\s*\[Querying (.*)\]$,whois,%1,X
+^\s*Record last updated at\.*:* (\S+.*),updated,%1
+^\s*Last Updated On:\s*(\S+.*),updated,%1
+^\s*Last-update\s*(.*)$,updated,%1
+^\s*Valid-date\s*(.*)$,expires,%1
+^\s*Last Modified:\s*(\S+),updated,%1
+^\s*Sponsoring Registrar:\s*(\S+.*),registrar,%1
+^\s*Sponsoring Registrar\s*\.*\s*(\S+.*),registrar,%1
+^\s*Domain servers in listed order:,@nslist,%
+^\s*DNS Servers:\s*$,@nslist,%
+^\s*Primary server\.*:\s*(\S+.*),ns,%1
+^\s*Secondary server\.*:\s*(\S+.*),ns,%1
+^\s*Domain created:\s*(\S+.*),created,%1
+^\s*Last modified\s*:\s*(\S+.*),updated,%1
+^\s*Current Registar:\s*(\S+.*),registrar,%1
+^\s*Registration Service Provided By: (\S+.*),registrar,%1
+^\s*Name Servers:\s*$,@nslist,%
+^\s*Creation date:\s*(\S+.*),created,%1
+^\s*Expiration date:\s*(\S+.*),expires,%1
+^\s*Registered on:\s*(\S+),registered,%1
+^\s*Registered through:\s*(\S+.*),registrar,%1
+^\s*Created by Registrar:\s*(\S+.*),registrar,%1
+^\s*Domain Registration Date:\s*(\S+.*),registered,%1
+^\s*Domain Expiration Date:\s*(\S+.*),expires,%1
+^\s*Domain Last Updated Date:\s*(\S+.*),updated,%1
+^\s*Record expires on (\S+.*),expires,%1
+^\s*CountryCode:\s*(\S+),registrant-country,%1,UM
+^\s*Registrant Country:\s*(.*)$,registrant-country,%1,UM
+^\s*Registrant Country Code\s*:*\.*\s*(.+)$,registrant-country,%1,UM
+^\s*[cC]ountry\s*:*\.*\s*(.*)$,registrant-country,%1,UM
+^\s*Owner Country\s*(.*)$,registrant-country,%1,UM
+^\s*Record created on\s*:*\s*(\S+.*),created,%1
+^\s*Database last updated on\s*:*\s*(\S+),updated,%1
+^\s*\**\s*Domain Servers:\s*$,@nslist,%
+^\s*Domain Created:\s*(\S+.*),created,%1
+^\s*Domain Last Updated:\s*(\S+.*),updated,%1
+^\s*Domain Currently Expires:\s*(\S+.*),expires,%1
+^\s*Current Nameservers:\s*$,@nslist,%
+^\s*Nameserver\s*:\s*(\S+.*)$,ns,%1
+^\s*Domain Name Servers\s*$,@nslist,%
+^\s*Nameserver Information:,@nslist,%
+^\s*Domain Name Server\s*:\s*$,@nslist,%
+^\s*Name servers\s*:\s*$,@nslist,%
+^\s*Organi[zs]ation Name\.+\s*(\S+.*)$,organization,%1
+^\s*Organi[zs]ation:\s*(\S+.*)$,organization,%1
+^\s*org-name:\s*(\S+.*)$,organization,%1
+^\s*Owner Organi[zs]ation\s*:\s*(\S+.*)$,organization,%1
+^\s*Registrant Name:\s*(\S+.*),registrant,%1
+^\s*Registrant Name\s*\.+\s*(\S+.*),registrant,%1
+^\s*Registrant Organization:\s*(\S+.*),organization,%1
+^\s*Registrant Organization\s*\.+\s*(\S+.*),organization,%1
+^\s*Registrar:\s*$,@join,%
+^\s*Create Date\s*:\s*(\S.*)$,created,%1
+^\s*Update Date\s*:\s*(\S.*)$,updated,%1
+^\s*last-modified\s*:\s*(\S.*)$,updated,%1
+^\s*source:\s*(\S.*)$,source,%1
+^\s*Expire Date\s*:\s*(\S.*)$,expires,%1
+^\s*Created On\s*:\s*(\S.*)$,created,%1
+^\s*Create\s*:\s*(\S*),created,%1
+^\s*Update\s*:\s*(\S*),updated,%1
+^\s*Expired\s*:\s*(\S*),expires,%1
+^\s*QueryTimes\s*:\s*(\d+),queried,%1
+^\s*Domain Create Date\s*:\s*(\S+),created,%1
+^\s*Domain Create Date\s*\.+\s*(\S+),created,%1
+^\s*Expiration Date\s*\.+\s*(\S+),expires,%1
+.*Expiration Date\s*:\s*(\S+),expires,%1
+#
+^\[Registrant\] *(.*)$,registrant,%1
+^\[Name Server\] *(.*),ns,%1
+^\[Created on\] *(.*),created,%1
+^\[Expires on\] *(.*),expires,%1
+^\[Last Updated\] *(.*),updated,%1
+^\s*Registered [Oo]n: *(.*)$,registered,%1
+^\s*Domain created on (.*)$,created,%1
+^\s*Domain expires on (.*)$,expires,%1
+^\s*Last updated on (.*)$,updated,%1
+^\s*Domain Name Commencement Date: (.*),created,%1
+^\s*Expiry [Dd]ate:\s*(.*),expires,%1
+.*Expiry [Dd]ate:\s*(.*),expires,%1
+^\s*Company Name: (.*)$,organization,%1
+^\s*Name Servers Information:,@nslist,%
+^\s*registration:\s*(.*)$,created,%1
+^\s*renewal:\s*(.*)$,expires,%1
+^\s*[Nn]server:\s*([^ ]*),ns,%1
+^\s*[cC]hanged:\s*([^:]*),updated,%1
+^\s*Registered:\s*(.*),created,%1
+^\s*Nameservers:,@nslist,%
+^\s*Registered Date\s*:\s*(.*)$,created,%1
+^\s*Last Updated Date\s*:\s*(.*)$,updated,%1
+^\s+Host Name\s+:\s+(.*),ns,%1
+^\s*Registrant\s+:\s+(.*),registrant,%1
+^\s*creation_date:\s*([^ ]*),created,%1
+^\s*expiration_date:\s*([^ ]*),expires,%1
+^\s*last_update:\s*([^ ]*),updated,%1
+^nameserver:\s*([^ ]*),ns,%1
+^registrant-organization:\s*(.*)$,registrant,%1
+^registrant-country:\s*(.*),registrant-country,%1
+^\s*Last updated:\s*(.*)$,updated,%1
+^\s*modified:\s*(.*)$,updated,%1
+^\s*expires:\s*(.*)$,expires,%1
+^\s*changed:\s*(\S+),updated,%1
+^\s*Registrar Registration Expiration Date:\s*(\S+),expires,%1
+^\s*Registry Expiry Date:\s*(\S+),expires,%1
+^\s*Updated Date:\s*(\S+),updated,%1
+^\s*First registration date:\s*$,+wrap,,
+^\s*First registration date:\s*(\S+),created,%1
+#
+^[Nn]et[Nn]ame:\s*(\S+),netname,%1
+^route:\s*(.*),cidr,%1
+^origin:\s*(\S+),asn,%1
+^OriginAS:\s*(\S+),asn,%1
+^CIDR:\s*(.*)$,cidr,%1
+^descr:\s*(.*)$,description,%1

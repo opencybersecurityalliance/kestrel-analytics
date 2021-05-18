@@ -1,0 +1,315 @@
+[
+    {
+	"description": "mimikatz command line args",
+        "conditions": {
+            "any": [
+                {
+                    "name": "command_line",
+                    "operator": "contains",
+                    "value": "sekurlsa"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 1.0}
+            },
+            {
+                "name": "append_to_property",
+                "params": {"name": "techniques", "value": "https://attack.mitre.org/techniques/T1075/"}
+            }
+        ]
+    },
+    {
+	"description": "Accessibility features",
+        "conditions": {
+            "any": [
+                {
+                    "name": "binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "sethc.exe"
+                },
+                {
+                    "name": "parent_ref.binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "osk.exe"
+                },
+                {
+                    "name": "parent_ref.binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "Magnify.exe"
+                },
+                {
+                    "name": "parent_ref.binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "Narrator.exe"
+                },
+                {
+                    "name": "parent_ref.binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "DisplaySwitch.exe"
+                },
+                {
+                    "name": "parent_ref.binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "AtBroker.exe"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "append_to_property",
+                "params": {"name": "techniques", "value": "https://attack.mitre.org/techniques/T1015/"}
+            },
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 1}
+            }
+        ]
+    },
+    {
+	"description": "encoded powershell",
+        "conditions": {
+            "all": [
+                {
+                    "name": "binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "powershell.exe"
+                },
+                {
+                    "name": "command_line",
+                    "operator": "matches_regex",
+                    "value": " -[Ee][Nn][Cc]"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 2}
+            },
+            {
+                "name": "append_to_property",
+                "params": {"name": "techniques", "value": "https://attack.mitre.org/techniques/T1086/"}
+            }
+        ]
+    },
+    {
+	"description": "potential powershell downgrade",
+        "conditions": {
+            "all": [
+                {
+                    "name": "binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "powershell.exe"
+                },
+                {
+                    "name": "command_line",
+                    "operator": "matches_regex",
+                    "value": " -[Vv][Ee]"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 1}
+            },
+            {
+                "name": "append_to_property",
+                "params": {"name": "techniques", "value": "https://attack.mitre.org/techniques/T1059/001/"}
+            }
+        ]
+    },
+    {
+	"description": "net use",
+        "conditions": {
+            "any": [
+                {
+                    "name": "command_line",
+                    "operator": "contains",
+                    "value": "net use"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 1}
+            }
+        ]
+    },
+    {
+	"description": "Account Discovery",
+        "conditions": {
+            "any": [
+                {
+                    "name": "command_line",
+                    "operator": "contains",
+                    "value": "net user"
+                },
+                {
+                    "name": "command_line",
+                    "operator": "contains",
+                    "value": "net group"
+                },
+                {
+                    "name": "command_line",
+                    "operator": "contains",
+                    "value": "net localgroup"
+                },
+                {
+                    "name": "command_line",
+                    "operator": "contains",
+                    "value": "whoami"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 1}
+            },
+            {
+                "name": "append_to_property",
+                "params": {"name": "techniques", "value": "https://attack.mitre.org/techniques/T1087/"}
+            }
+        ]
+    },
+    {
+	"description": "suspicious registry modification",
+        "conditions": {
+            "all": [
+                {
+                    "name": "type",
+                    "operator": "equal_to",
+                    "value": "windows-registry-key"
+                },
+                {
+                    "name": "key",
+                    "operator": "matches_regex",
+                    "value": "^(.*)BackgroundAccessApplications"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 1}
+            }
+        ]
+    },
+    {
+	"description": "binary in temp dir",
+        "conditions": {
+            "any": [
+                {
+                    "name": "binary_ref.parent_directory_ref.path",
+                    "operator": "equal_to",
+                    "value": "C:\\"
+                },
+                {
+                    "name": "binary_ref.parent_directory_ref.path",
+                    "operator": "matches_regex",
+                    "value": "C:\\\\Users\\\\[A-Za-z][A-Za-z0-9_]*\\\\AppData\\\\Local\\\\Temp"
+                },
+                {
+                    "name": "binary_ref.parent_directory_ref.path",
+                    "operator": "equal_to",
+                    "value": "C:\\Windows\\TEMP"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 2}
+            }
+        ]
+    },
+    {
+	"description": "MS Office spawns shell",
+        "conditions": {
+            "all": [
+                {
+                    "any": [
+                        {
+                            "name": "binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "cmd.exe"
+                        },
+                        {
+                            "name": "binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "powershell.exe"
+                        }
+                    ]
+                },
+                {
+                    "any": [
+                        {
+                            "name": "parent_ref.binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "WINWORD.EXE"
+                        },
+                        {
+                            "name": "parent_ref.binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "EXCEL.EXE"
+                        },
+                        {
+                            "name": "parent_ref.binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "POWERPNT.EXE"
+                        },
+                        {
+                            "name": "parent_ref.binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "MSACCESS.EXE"
+                        },
+                        {
+                            "name": "parent_ref.binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "OUTLOOK.EXE"
+                        },
+                        {
+                            "name": "parent_ref.binary_ref.name",
+                            "operator": "equal_to",
+                            "value": "VISIO.EXE"
+                        }
+                    ]
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 2}
+            }
+        ]
+    },
+    {
+	"description": "node forks something that is not node",
+        "conditions": {
+            "all": [
+                {
+                    "name": "parent_ref.binary_ref.name",
+                    "operator": "equal_to",
+                    "value": "node"
+                },
+                {
+                    "name": "binary_ref.name",
+                    "operator": "not_equal_to",
+                    "value": "node"
+                }
+            ]
+        },
+        "actions": [
+            {
+                "name": "increment_property",
+                "params": {"name": "x_suspicious_score", "value": 3}
+            }
+        ]
+    }
+]
