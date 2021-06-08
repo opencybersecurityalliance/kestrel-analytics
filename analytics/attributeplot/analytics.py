@@ -6,11 +6,16 @@ import os
 
 # Kestrel analytics default paths
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"
-OUTPUT_DISP_PATH = "/data/display/plot.svg"
+OUTPUT_DISP_PATH = "/data/display/plot.html"
 
-x_param = os.environ.get('XPARAM')
-y_param = os.environ.get('YPARAM')
-if not x_param or not y_param:
+
+class PlotFailure(Exception):
+    pass
+
+
+x_col = os.environ.get('XPARAM')
+y_col = os.environ.get('YPARAM')
+if not x_col or not y_col:
     raise Exception('No X or Y parameter specified')
 
 def is_numeric(df, column):
@@ -97,10 +102,6 @@ def timeseries(df, on, col, rule=None, func=pd.Series.count):
 
 
 def analytics(df):
-    x_col = x_param
-    y_col = y_param
-    x = df[x_col]
-    y = df[y_col]
     x_ftype = feature_type(df, x_col)
     y_ftype = feature_type(df, y_col)
     fig = None
@@ -108,35 +109,32 @@ def analytics(df):
     if y_ftype == 'numerical':
         if x_ftype == 'numerical':
             # scatterplot
-            data = pd.DataFrame({x_col: x, y_col: y})
-            fig = data.plot.scatter(x=x_col, y=y_col).get_figure()
-            return fig
+            fig = df.plot.scatter(x=x_col, y=y_col).get_figure()
         elif x_ftype == 'categorical':
-            # TODO: area chart as density plot
-            pass
+            # area plot
+            fig = df.plot.area(x=x_col, y=y_col, stacked=False).get_figure()
         elif x_ftype == 'timestamp':
+            # time chart
             ts = timeseries(df, x_col, y_col, func=sum)
-            return ts.plot.line(y=y_col).get_figure()
+            fig = ts.plot.line(y=y_col).get_figure()
         else:
-            # TODO: raise
-            pass
+            raise PlotFailure(f'Unknown XPARAM feature type "{x_ftype}" for {x_col}')
     elif y_ftype == 'categorical':
-        if x_ftype == 'categorical':
-            # TODO: stacked or grouped bar chart
-            pass
-        elif x_ftype == 'timestamp':
+        if x_ftype == 'timestamp':
+            # time chart
             ts = timeseries(df, x_col, y_col)
-            return ts.plot.line(y=y_col).get_figure()
+            fig = ts.plot.line(y=y_col).get_figure()
         else:
-            # ???
-            pass
+            raise PlotFailure(f'Not implemented: no plot type for "{y_ftype}" over "{x_ftype}"')
+    elif y_ftype == 'timestamp':
+        raise PlotFailure(f'Unsupported YPARAM feature type "{y_ftype}" for {y_col}')
     else:
-        # TODO: raise
-        pass
+        raise PlotFailure(f'Unknown YPARAM feature type "{y_ftype}" for {y_col}')
+    return fig
 
 
 if __name__ == "__main__":
     dfi = pd.read_parquet(INPUT_DATA_PATH)
     fig = analytics(dfi)
     if fig:
-        fig.savefig(OUTPUT_DISP_PATH)
+        fig.savefig(OUTPUT_DISP_PATH, format='svg')

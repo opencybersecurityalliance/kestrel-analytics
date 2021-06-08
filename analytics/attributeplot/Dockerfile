@@ -9,7 +9,7 @@
 FROM python:3
 
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir pandas pyarrow && \
+    pip install --no-cache-dir pandas pyarrow matplotlib && \
     apt-get update && \
     apt-get clean
 
