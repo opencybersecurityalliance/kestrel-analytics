@@ -23,5 +23,5 @@ Then use it in Kestrel:
 ```
 # varX is network-traffic from previous commands
 # this command should return an interactive map with IPs pinned on the map
-APPLY docker://domainnamelookup ON varX
+APPLY docker://pinip ON varX
 ```

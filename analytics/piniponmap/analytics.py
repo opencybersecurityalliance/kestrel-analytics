@@ -2,6 +2,7 @@
 
 import pandas as pd
 import geoip2.database
+from geoip2.errors import AddressNotFoundError
 import folium
 from folium.plugins import MiniMap
 from IPython.core.formatters import DisplayFormatter
@@ -14,8 +15,12 @@ def visualize_ips(ips):
     client = geoip2.database.Reader('GeoLite2-City.mmdb')
     locations = []
     for ip in ips:
-        r = client.city(ip)
-        locations.append(((r.location.latitude,r.location.longitude), ip))
+        try:
+            r = client.city(ip)
+        except AddressNotFoundError:
+            pass
+        else:
+            locations.append(((r.location.latitude,r.location.longitude), ip))
     map_osm = folium.Map(location=(r.location.latitude,r.location.longitude))
     for l in locations:
         loc, ip = l
