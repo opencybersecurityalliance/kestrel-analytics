@@ -1,28 +1,34 @@
 #!/usr/bin/env python3
 
+import ast
 import os
 
 import pandas as pd
-from sklearn.cluster import KMeans
+from sklearn.cluster import DBSCAN, KMeans
 
 # Kestrel analytics default paths (single input variable)
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"
 OUTPUT_DATA_PATH = "/data/output/0.parquet.gz"
 
-# Our analytic parameters from the WITH clause
-# Kestrel will create env vars for them 
+# Our analytic parameter from the WITH clause
+# Kestrel will create env vars for them
+METHODS = {
+    'dbscan': (DBSCAN, {p:v for p, v in os.environ.items() if p in DBSCAN()._get_param_names()}),
+    'kmeans': (KMeans, {p:v for p, v in os.environ.items() if p in KMeans()._get_param_names()}),
+}
+
 COLS = os.environ['columns']
-N = os.environ['n']
+METHOD = os.environ.get('method', 'kmeans')
 
 
 def analytics(df):
     # Process our parameters
     cols = COLS.split(',')
-    n = int(N)
-
-    # Run the algorithm
-    kmeans = KMeans(n_clusters=n).fit(df[cols])
-    df['cluster'] = kmeans.labels_
+    method = METHOD.lower()
+    algo, params = METHODS[method]
+    params = {p: int(v) if v.isdigit() else v for p, v in params.items()}
+    model = algo(**params).fit(df[cols])
+    df['cluster'] = model.labels_
 
     # return the updated Kestrel variable
     return df
