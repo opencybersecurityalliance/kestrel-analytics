@@ -12,10 +12,11 @@ docker build -t kestrel-analytics-sklearn-cluster .
 Example usage in Kestrel:
 ```
 conns = GET network-traffic FROM file://samplestix.json where [network-traffic:dst_port > 0]
-APPLY docker://sklearn-cluster ON conns WITH n=2, columns=src_byte_count,dst_byte_count
+APPLY docker://sklearn-cluster ON conns WITH method=kmeans, n_clusters=3, columns=src_byte_count,dst_byte_count
 ```
 
 ## Parameters
 
-- `n`: the number of clusters to form (`n_clusters`)
+- `method`: the clustering algorithm. Clustering algorithms such as `kmeans`, and `dbscan` are supported. 
+- Please refer to the following document for the parameters when you specify a algorithm. https://scikit-learn.org/stable/modules/clustering.html
 - `columns`: the Kestrel attributes (columns) to use for clustering.  Only these columns will be seen by the clustering algorithm.
