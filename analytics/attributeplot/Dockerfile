@@ -6,7 +6,7 @@
 #
 ################################################################
 
-FROM python:3
+FROM python:3.9
 
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir pandas pyarrow matplotlib && \
