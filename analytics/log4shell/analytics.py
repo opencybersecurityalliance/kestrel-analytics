@@ -17,13 +17,15 @@ def check_string(s):
     if match:
         subst = match.group(0)
         deob = deobfuscate(subst)
-        if deob and deob.startswith('${jndi:'):
+        if deob and '${jndi:' in deob:
             return deob
     return None
 
 
 def check_url(url):
-    return check_string(unquote(url))
+    while re.search(r'%[0-9A-Fa-f]{2}', url):
+        url = unquote(url)
+    return check_string(url)
 
 
 def analytics(dataframe):

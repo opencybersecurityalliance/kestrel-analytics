@@ -70,7 +70,7 @@ parser = Lark(grammar, parser='lalr', # debug=True,
 
 def deobfuscate(data):
     try:
-        result = parser.parse(data)
+        result = parser.parse(data.lower())
     except exceptions.UnexpectedToken as e:
         logger.error('%s', e, exc_info=e)
         result = None
