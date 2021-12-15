@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from unlog4shell import check_string, check_url
+from unlog4shell import check_string, check_url, check_payload
 
 # Kestrel analytics default paths (single input variable)
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"

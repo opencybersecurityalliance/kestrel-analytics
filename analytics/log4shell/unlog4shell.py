@@ -1,4 +1,5 @@
 import base64
+import json
 import logging
 import re
 
@@ -91,8 +92,36 @@ def check_url(url):
     return check_string(unquote(unquote(unquote(url))))
 
 
+def check_object(obj):
+    result = None
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            if isinstance(value, str):
+                result = check_url(value)
+                if result:
+                    return result
+            elif isinstance(value, (dict, list)):
+                result = check_object(value)
+                if result:
+                    return result
+    elif isinstance(obj, list):
+        for item in obj:
+            result = check_object(item)
+            if result:
+                return result
+    elif isinstance(obj, str):
+        result = check_url(obj)
+    return result
+
+
 def check_payload(payload_bin):
     # Hopefully this is a log payload and not a packet payload!
     payload = base64.b64decode(payload_bin).decode('utf-8')
+    # Check if it's JSON
+    try:
+        payload = json.loads(payload)
+        return check_object(payload)
+    except json.decoder.JSONDecodeError:
+        pass
     # Use check_url here in case there's some URL-encoding
     return check_url(payload)
