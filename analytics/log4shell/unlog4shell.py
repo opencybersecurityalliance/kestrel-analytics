@@ -109,18 +109,26 @@ def deobfuscate(data):
         result = None
     return result
 
+
 def check_string(s):
-    match = re.search(r'(\$\{.*\})', s)
-    if match:
-        subst = match.group(0)
-        deob = deobfuscate(subst.lower())
+    for match in re.findall(r'(\$\{.*\})', s):
+        deob = deobfuscate(match.lower())
         if deob and deob.find('${jndi:') > -1:
             return deob
     return None
 
+
 def check_url(url):
     # We run unencode 3 times to handle all known in-the-wild in-log encodings
     return check_string(unquote(unquote(unquote(url))))
+
+
+def check_payload(payload_bin):
+    # Hopefully this is a log payload and not a packet payload!
+    payload = base64.b64decode(payload_bin).decode('utf-8')
+    # Use check_url here in case there's some URL-encoding
+    return check_url(payload)
+
 
 if __name__ == '__main__':
     for string_positive in TEST_STRINGS_POSITIVE:
@@ -140,4 +148,3 @@ if __name__ == '__main__':
         for line in test_content.splitlines():
             if check_url(test_content):
                 print("Test Case FAILURE, got positive match expected positive: " + line)
-
