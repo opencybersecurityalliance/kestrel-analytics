@@ -16,7 +16,7 @@ subst: "${" prefix? cstr default? "}"
 
 cstr: (subst|/[^$]/|NAME)*
 
-default: ":-" (LETTER|DIGIT|OTHER)+
+default: ":-" (LETTER|DIGIT|OTHER)*
 
 prefix: (NAME)? ":"
 
