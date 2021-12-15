@@ -1,30 +1,12 @@
 #!/usr/bin/env python3
 
-import re
-
 import pandas as pd
-from urllib.parse import unquote
 
-from unlog4shell import deobfuscate
-
+from unlog4shell import deobfuscate, check_string, check_url
 
 # Kestrel analytics default paths (single input variable)
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"
 OUTPUT_DATA_PATH = "/data/output/0.parquet.gz"
-
-def check_string(s):
-    match = re.search(r'(\$\{.*\})', s)
-    if match:
-        subst = match.group(0)
-        deob = deobfuscate(subst)
-        if deob and deob.startswith('${jndi:'):
-            return deob
-    return None
-
-
-def check_url(url):
-    return check_string(unquote(url))
-
 
 def analytics(dataframe):
     # analyze data in dataframe
