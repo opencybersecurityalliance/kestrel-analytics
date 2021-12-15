@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 
-import re
-
 import pandas as pd
-from urllib.parse import unquote
 
-from unlog4shell import deobfuscate
-
+from unlog4shell import deobfuscate, check_string, check_url
 
 # Kestrel analytics default paths (single input variable)
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"
@@ -26,7 +22,6 @@ def check_url(url):
     while re.search(r'%[0-9A-Fa-f]{2}', url):
         url = unquote(url)
     return check_string(url)
-
 
 def analytics(dataframe):
     # analyze data in dataframe
