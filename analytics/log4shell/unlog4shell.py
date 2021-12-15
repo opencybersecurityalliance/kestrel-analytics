@@ -22,7 +22,7 @@ default: ":-" (LETTER|DIGIT|OTHER)+
 
 prefix: (NAME)? ":"
 
-NAME: LETTER (LETTER|DIGIT|"_")*
+NAME: LETTER (LETTER|DIGIT|"_"|"-"|".")*
 OTHER: "/"|"."|"_"|":"
 
 %import common (LETTER, DIGIT)

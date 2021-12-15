@@ -3,6 +3,13 @@
 This is a quick attempt at detecting exploits of the log4shell
 vulnerability with Kestrel.
 
+The vulnerability appears to involve "property substitution" (see
+https://logging.apache.org/log4j/2.x/manual/configuration.html#PropertySubstitution),
+so this analytic includes a small "pseudo-parser" for log4j property
+substitutions.
+
+## Usage
+
 After gathering data from your stix-shifter data sources:
 ```
 urls = GET url FROM <datasource config> WHERE [url:value LIKE '%${%']
