@@ -13,15 +13,16 @@ def analytics(dataframe):
     # analyze data in dataframe
 
     # provide insights or additional knowledge
+    dataframe['exploit'] = None
     if 'value' in dataframe.columns:
         # Assume URL?  We don't actually know the SCO type.
         dataframe['exploit'] = dataframe['value'].apply(check_url)
     for column in dataframe.columns:
         # User agent column in STIX patterns is a bit nasty:
         #  "extensions.'http-request-ext'.request_header.'User-Agent'"
-        if 'user-agent' in column.lower() or 'user_agent' in column.lower():
-            dataframe['exploit'] = dataframe[column].apply(check_string)
-            break
+        if 'request_header' in column.lower():
+            result = dataframe[column].apply(check_string)
+            dataframe['exploit'] = dataframe['exploit'].combine_first(result)
         elif column == 'payload_bin':
             dataframe['exploit'] = dataframe[column].apply(check_payload)
             break
