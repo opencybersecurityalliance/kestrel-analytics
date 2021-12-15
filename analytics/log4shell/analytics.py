@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import base64
 import pandas as pd
 
 from unlog4shell import check_string, check_url, check_payload
@@ -17,6 +18,7 @@ def analytics(dataframe):
     if 'value' in dataframe.columns:
         # Assume URL?  We don't actually know the SCO type.
         dataframe['exploit'] = dataframe['value'].apply(check_url)
+    
     for column in dataframe.columns:
         # User agent column in STIX patterns is a bit nasty:
         #  "extensions.'http-request-ext'.request_header.'User-Agent'"
@@ -25,7 +27,8 @@ def analytics(dataframe):
             dataframe['exploit'] = dataframe['exploit'].combine_first(result)
         elif column == 'payload_bin':
             dataframe['exploit'] = dataframe[column].apply(check_payload)
-            break
+            dataframe['original'] = payload = base64.b64decode(dataframe[column]).decode('utf-8')
+        break
 
     # return the updated Kestrel variable
     return dataframe

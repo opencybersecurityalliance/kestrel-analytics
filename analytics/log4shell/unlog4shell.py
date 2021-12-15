@@ -74,18 +74,21 @@ def deobfuscate(data):
     try:
         result = parser.parse(data.lower())
     except exceptions.UnexpectedToken as e:
-        logger.error('%s', e, exc_info=e)
+        #logger.error('%s', e, exc_info=e)
         result = None
     return result
 
 
 def check_string(s):
+    # Check for a Java exception as a special case
+    if re.match(r'.*Error looking up JNDI resource \[ldap:\/\/.+\/.*\].*', s):
+        return s
+
     for match in re.findall(r'(\$\{.*\})', s):
         deob = deobfuscate(match.lower())
         if deob and deob.find('${jndi:') > -1:
             return deob
     return None
-
 
 def check_url(url):
     # We run unencode 3 times to handle all known in-the-wild in-log encodings

