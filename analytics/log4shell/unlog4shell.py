@@ -15,9 +15,9 @@ start: subst
 
 subst: "${" prefix* cstr default? "}"
 
-cstr: (subst|/[^$]/|NAME)*
+cstr: (subst|/[^$]/|NAME|OTHER)*
 
-default: ":-" (LETTER|DIGIT|OTHER)*
+default: ":-" (LETTER|DIGIT|OTHER|subst)*
 
 prefix: (NAME)? ":"
 
@@ -31,8 +31,14 @@ class _TranslateTree(Transformer):
     def __init__(self):
         super().__init__()
 
+    def _restore(self, arg):
+        prefix, _, rest = arg.partition(':')
+        if prefix in ('jndi', 'sys'):
+            return '${' + arg + '}'
+        return arg
+
     def start(self, arg):
-        return '${' + arg[0] + '}'
+        return self._restore(arg[0])
 
     def subst(self, args):
         if len(args) >= 2:
@@ -47,14 +53,15 @@ class _TranslateTree(Transformer):
                 else:
                     value = args[1].lower()
             elif prefix in ('jndi', 'sys'):
-                value = ':'.join(args)
+                value = '${' + ':'.join(args) + '}'
             else:
                 value = args[-1]
             return value
-        return args[-1]
+        return self._restore(args[-1])
 
     def cstr(self, args):
-        return ''.join(args)
+        result = ''.join(args)
+        return self._restore(result)
 
     def default(self, args):
         if args:
@@ -71,6 +78,7 @@ parser = Lark(grammar, parser='lalr', # debug=True,
 
 
 def deobfuscate(data):
+    #print(Lark(grammar, parser='lalr').parse(data.lower()).pretty())
     try:
         result = parser.parse(data.lower())
     except exceptions.UnexpectedToken as e:
