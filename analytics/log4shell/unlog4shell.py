@@ -89,14 +89,12 @@ class _TranslateTree(Transformer):
         return ("cstr", ''.join(args))
 
     def default(self, args):
-        if args:
-            return ("default", ''.join(args))
-        return ''
+        return ("default", ''.join(args))
 
     def prefix(self, args):
         if args and args[0]:
             return ("prefix", args[0].value)
-        return ''
+        return ("prefix", "")
 
 
 parser = Lark(grammar, parser='lalr', # debug=True,
