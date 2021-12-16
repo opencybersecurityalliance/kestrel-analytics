@@ -8,63 +8,96 @@ from urllib.parse import unquote
 
 logger = logging.getLogger(__name__)
 
+
 grammar = '''
 // log4j substition parser
 
 start: subst
 
-subst: "${" prefix* cstr default? "}"
+subst: "${" prefix* cstr* default? "}"
 
-cstr: (subst|/[^$]/|NAME)*
+cstr: subst|/[^$]/|NAME
 
 default: ":-" (LETTER|DIGIT|OTHER)*
 
 prefix: (NAME)? ":"
 
 NAME: LETTER (LETTER|DIGIT|"_"|"-"|".")*
+
 OTHER: "/"|"."|"_"|"-"|":"|" "
 
 %import common (LETTER, DIGIT)
 '''
+
 
 class _TranslateTree(Transformer):
     def __init__(self):
         super().__init__()
 
     def start(self, arg):
-        return '${' + arg[0] + '}'
+        return arg[0]
 
     def subst(self, args):
-        if len(args) >= 2:
-            # interpret args[0] as context (e.g. base64)
-            prefix = args[0]
-            if prefix == 'base64':
-                value = base64.b64decode(args[1]).decode('utf-8')
-            elif prefix == 'lower':
-                if len(args) ==3 and args[1] == '' and args[2] == '':
-                    # ${lower::} is probably not valid, but we should detect it anyway
-                    value = ':'
-                else:
-                    value = args[1].lower()
-            elif prefix in ('jndi', 'sys'):
-                value = ':'.join(args)
+        if args:
+            bodies = []
+            for a in args:
+                if a[0] == "prefix":
+                    bodies += a[1] + ":"
+                elif a[0] == "cstr":
+                    bodies += a[1]
+                elif a[0] == "default":
+                    bodies += ":-" + a[1]
+                    
+            body = "".join(bodies)
+            
+            if ":-" in body:
+                bodies = body.split(":-")
+                default = bodies[-1]
+                body = ":-".join(bodies[:-1])
             else:
-                value = args[-1]
+                default = None
+                
+            if ":" in body:
+                bodies = body.split(":")
+                prefix = bodies[0]
+                body = ":".join(bodies[1:])
+            else:
+                prefix = None
+                
+            if prefix:
+                if prefix == 'base64':
+                    value = base64.b64decode(body).decode('utf-8')
+                elif prefix == 'lower':
+                    value = body.lower()
+                elif prefix in ('jndi', 'sys'):
+                    value = '${' + prefix + ":" + body + '}'
+                elif default:
+                    value = default
+                else:
+                    value = body
+            elif default:
+                value = default
+            else:
+                value = body
+                    
             return value
-        return args[-1]
+
+        else:
+            return ""
 
     def cstr(self, args):
-        return ''.join(args)
+        return ("cstr", ''.join(args))
 
     def default(self, args):
         if args:
-            return ''.join(args)
+            return ("default", ''.join(args))
         return ''
 
     def prefix(self, args):
         if args and args[0]:
-            return args[0].value
+            return ("prefix", args[0].value)
         return ''
+
 
 parser = Lark(grammar, parser='lalr', # debug=True,
               transformer=_TranslateTree())
