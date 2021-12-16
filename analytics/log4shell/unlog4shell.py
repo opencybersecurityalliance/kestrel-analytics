@@ -13,7 +13,7 @@ grammar = '''
 
 start: subst
 
-subst: "${" prefix? cstr default? "}"
+subst: "${" prefix* cstr default? "}"
 
 cstr: (subst|/[^$]/|NAME)*
 
@@ -22,7 +22,7 @@ default: ":-" (LETTER|DIGIT|OTHER)*
 prefix: (NAME)? ":"
 
 NAME: LETTER (LETTER|DIGIT|"_"|"-"|".")*
-OTHER: "/"|"."|"_"|":"
+OTHER: "/"|"."|"_"|"-"|":"|" "
 
 %import common (LETTER, DIGIT)
 '''
@@ -35,23 +35,23 @@ class _TranslateTree(Transformer):
         return '${' + arg[0] + '}'
 
     def subst(self, args):
-        if len(args) == 3:
-            if args[0] == 'jndi':
-                return ':'.join(args)
-            return args[2]
-        if len(args) == 2:
+        if len(args) >= 2:
             # interpret args[0] as context (e.g. base64)
             prefix = args[0]
             if prefix == 'base64':
                 value = base64.b64decode(args[1]).decode('utf-8')
             elif prefix == 'lower':
-                value = args[1].lower()
-            elif args[0] == 'jndi':
+                if len(args) ==3 and args[1] == '' and args[2] == '':
+                    # ${lower::} is probably not valid, but we should detect it anyway
+                    value = ':'
+                else:
+                    value = args[1].lower()
+            elif prefix in ('jndi', 'sys'):
                 value = ':'.join(args)
             else:
-                value = args[1]
+                value = args[-1]
             return value
-        return args[0]
+        return args[-1]
 
     def cstr(self, args):
         return ''.join(args)
@@ -89,6 +89,7 @@ def check_string(s):
         if deob and deob.find('${jndi:') > -1:
             return deob
     return None
+
 
 def check_url(url):
     # We run unencode 3 times to handle all known in-the-wild in-log encodings

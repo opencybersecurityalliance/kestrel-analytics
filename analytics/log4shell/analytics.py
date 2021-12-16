@@ -10,6 +10,10 @@ INPUT_DATA_PATH = "/data/input/0.parquet.gz"
 OUTPUT_DATA_PATH = "/data/output/0.parquet.gz"
 
 
+def unbase64(blob):
+    return base64.b64decode(blob).decode('utf-8')
+
+
 def analytics(dataframe):
     # analyze data in dataframe
 
@@ -27,8 +31,8 @@ def analytics(dataframe):
             dataframe['exploit'] = dataframe['exploit'].combine_first(result)
         elif column == 'payload_bin':
             dataframe['exploit'] = dataframe[column].apply(check_payload)
-            dataframe['original'] = payload = base64.b64decode(dataframe[column]).decode('utf-8')
-        break
+            dataframe['original'] = dataframe[column].apply(unbase64)
+            break
 
     # return the updated Kestrel variable
     return dataframe

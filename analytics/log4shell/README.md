@@ -47,7 +47,7 @@ period of time, say the last 24 hours:
 ```
 payloads = GET artifact
            FROM stixshifter://...
-           WHERE [ipv4-addr:value LIKE '%'] START t'2021-12-14T20:43:10.000Z' STOP t'2021-12-15T20:43:10.000Z'
+           WHERE [artifact:payload_bin MATCHES '.*'] START t'2021-12-14T20:43:10.000Z' STOP t'2021-12-15T20:43:10.000Z'
 ```
 
 Run the analytic and then filter for records with an apparent exploit attempt:
