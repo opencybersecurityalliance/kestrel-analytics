@@ -20,7 +20,8 @@ prefix: /[^:]*:/
 default: "-"? (LETTER|DIGIT|OTHER)+
 
 NAME: LETTER (LETTER|DIGIT|"_"|"-"|".")*
-OTHER: "/"|"."|"_"|"-"|":"|" "|"="
+
+OTHER: "/"|"."|"_"|"-"|":"|" "|"="|"#"|"@"
 
 %import common (LETTER, DIGIT)
 '''
@@ -75,7 +76,7 @@ def deobfuscate(data):
         result = parser.parse(data.lower())
     except exceptions.UnexpectedToken as e:
         #logger.error('%s', e, exc_info=e)
-        result = None
+        result = data
     return result
 
 
