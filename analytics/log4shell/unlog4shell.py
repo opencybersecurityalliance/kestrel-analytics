@@ -1,5 +1,4 @@
 import base64
-import json
 import logging
 import re
 
@@ -8,21 +7,20 @@ from urllib.parse import unquote
 
 logger = logging.getLogger(__name__)
 
+
 grammar = '''
 // log4j substition parser
 
 start: subst
 
-subst: "${" prefix* cstr default? "}"
+subst: "${" prefix? default "}"
 
-cstr: (subst|/[^$]/|NAME|OTHER)*
+prefix: /[^:]*:/
 
-default: ":-" (LETTER|DIGIT|OTHER|subst)*
-
-prefix: (NAME)? ":"
+default: "-"? (LETTER|DIGIT|OTHER)+
 
 NAME: LETTER (LETTER|DIGIT|"_"|"-"|".")*
-OTHER: "/"|"."|"_"|"-"|":"|" "
+OTHER: "/"|"."|"_"|"-"|":"|" "|"="
 
 %import common (LETTER, DIGIT)
 '''
@@ -31,14 +29,8 @@ class _TranslateTree(Transformer):
     def __init__(self):
         super().__init__()
 
-    def _restore(self, arg):
-        prefix, _, rest = arg.partition(':')
-        if prefix in ('jndi', 'sys'):
-            return '${' + arg + '}'
-        return arg
-
     def start(self, arg):
-        return self._restore(arg[0])
+        return arg[0]
 
     def subst(self, args):
         if len(args) >= 2:
@@ -47,31 +39,31 @@ class _TranslateTree(Transformer):
             if prefix == 'base64':
                 value = base64.b64decode(args[1]).decode('utf-8')
             elif prefix == 'lower':
-                if len(args) ==3 and args[1] == '' and args[2] == '':
+                if len(args) == 3 and args[1] == '' and args[2] == '':
                     # ${lower::} is probably not valid, but we should detect it anyway
                     value = ':'
                 else:
                     value = args[1].lower()
-            elif prefix in ('jndi', 'sys'):
-                value = '${' + ':'.join(args) + '}'
+            elif prefix == 'jndi':
+                value = ':'.join(args)
+            elif prefix == 'sys':
+                value = '' # '${' + ':'.join(args) + '}'
             else:
                 value = args[-1]
             return value
-        return self._restore(args[-1])
-
-    def cstr(self, args):
-        result = ''.join(args)
-        return self._restore(result)
+        return args[-1]
 
     def default(self, args):
         if args:
-            return ''.join(args)
+            #return ''.join(args).lstrip(':-')
+            return ''.join(args).rpartition(':-')[2]
         return ''
 
     def prefix(self, args):
         if args and args[0]:
-            return args[0].value
+            return args[0].value.rstrip(':')
         return ''
+
 
 parser = Lark(grammar, parser='lalr', # debug=True,
               transformer=_TranslateTree())
@@ -87,15 +79,49 @@ def deobfuscate(data):
     return result
 
 
+def extract_innermost(data):
+    stack = []
+    match_lb = False
+    start = 0
+    stop = 0
+    for pos, ch in enumerate(data):
+        if match_lb and ch == '{':
+            stack.append(pos - 1)
+        elif ch == '$':
+            match_lb = True
+        else:
+            match_lb = False
+        if ch == '}':
+            if stack:
+                start = stack.pop()
+                stop = pos + 1
+                break
+    return start, stop
+
+
 def check_string(s):
     # Check for a Java exception as a special case
     if re.match(r'.*Error looking up JNDI resource \[ldap:\/\/.+\/.*\].*', s):
         return s
 
-    for match in re.findall(r'(\$\{.*\})', s):
-        deob = deobfuscate(match.lower())
-        if deob and deob.find('${jndi:') > -1:
-            return deob
+    result = None
+    while True:
+        prev = s
+        start, stop = extract_innermost(s)
+        if start != stop:
+            inner = s[start:stop]
+            result = deobfuscate(inner)
+            if result == inner:
+                s = deobfuscate(s)
+                return s
+            if result.startswith('jndi:'):
+                return result[5:]  # Remove jndi part
+            s = s[:start] + result + s[stop:]
+            if prev == s:
+                break
+        else:
+            break
+
     return None
 
 
@@ -104,36 +130,8 @@ def check_url(url):
     return check_string(unquote(unquote(unquote(url))))
 
 
-def check_object(obj):
-    result = None
-    if isinstance(obj, dict):
-        for key, value in obj.items():
-            if isinstance(value, str):
-                result = check_url(value)
-                if result:
-                    return result
-            elif isinstance(value, (dict, list)):
-                result = check_object(value)
-                if result:
-                    return result
-    elif isinstance(obj, list):
-        for item in obj:
-            result = check_object(item)
-            if result:
-                return result
-    elif isinstance(obj, str):
-        result = check_url(obj)
-    return result
-
-
 def check_payload(payload_bin):
     # Hopefully this is a log payload and not a packet payload!
     payload = base64.b64decode(payload_bin).decode('utf-8')
-    # Check if it's JSON
-    try:
-        payload = json.loads(payload)
-        return check_object(payload)
-    except json.decoder.JSONDecodeError:
-        pass
     # Use check_url here in case there's some URL-encoding
     return check_url(payload)
