@@ -33,6 +33,9 @@ attacks = GET url FROM urls WHERE [url:exploit LIKE '%']
 The `LIKE '%'` comparison will match any non-NULL value; only entries
 where an exploit is found will have anything in that column.
 
+The analytic will also add attributes for the components of the URL:
+`hostname`, `port`, `path`, and `query`.  Some of these may be NULL.
+
 ## Search raw payloads
 
 If your datasource returns `artifact` SCOs, you can try applying the
