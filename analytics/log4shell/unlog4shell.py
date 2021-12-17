@@ -21,7 +21,7 @@ default: "-"? (LETTER|DIGIT|OTHER)+
 
 NAME: LETTER (LETTER|DIGIT|"_"|"-"|".")*
 
-OTHER: "/"|"."|"_"|"-"|":"|" "|"="|"#"|"@"
+OTHER: "/"|"."|"_"|"-"|":"|" "|"="|"#"|"@"|"$"
 
 %import common (LETTER, DIGIT)
 '''
@@ -88,6 +88,8 @@ def extract_innermost(data):
     for pos, ch in enumerate(data):
         if match_lb and ch == '{':
             stack.append(pos - 1)
+        elif match_lb and ch == '$':
+            pass
         elif ch == '$':
             match_lb = True
         else:
@@ -117,6 +119,9 @@ def check_string(s):
                 return s
             if result.startswith('jndi:'):
                 return result[5:]  # Remove jndi part
+            if start and s[start - 1] == '$':
+                # Trim double $
+                start -= 1
             s = s[:start] + result + s[stop:]
             if prev == s:
                 break

