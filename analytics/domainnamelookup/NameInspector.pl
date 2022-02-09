@@ -17,8 +17,7 @@ use Time::Local;
 
 sub Inspect($);
 
-my $BASE='/opt/ibm/analytics';
-my $WhoisCache='/tmp';
+my $WhoisCache='/tmp/kestrel_analytics_annotateip';
 
 if(! -d $WhoisCache){
     system('/bin/mkdir', '-p', $WhoisCache);
@@ -34,13 +33,11 @@ my @tld=(
     ['\...$', [-3,-1]]
     );
 
-my $mapper = "/opt/analytics/WhoisMapper.cf";
+my $mapper = "./WhoisMapper.cf";
 
 if(! -f $mapper){
     die "$0: Missing Whois mapping file ($mapper).\n";
 }
-
-#my $DNSPTLD="/opt/analytics/dnspTLD";
 
 open(FH, "<$mapper");
 while(<FH>){

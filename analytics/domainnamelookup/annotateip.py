@@ -76,7 +76,7 @@ def analytics(dataframe):
         else:
             cache[ip] = {}
             lookups = lookups + 1
-            exploreIP = subprocess.Popen(['/opt/analytics/exploreIP.pl', str(ip)],
+            exploreIP = subprocess.Popen(['./exploreIP.pl', str(ip)],
                                          stdout=subprocess.PIPE)
             if exploreIP.returncode == None:
                 for line in exploreIP.stdout:

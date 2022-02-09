@@ -67,7 +67,7 @@ awk '
 sed -e 's/\.$//' |
 LANG=C sort -u
 
-/opt/analytics/NameInspector.pl "$IP"
+./NameInspector.pl "$IP"
 
 exit 0
 
