@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
+import os
 import pandas as pd
 import numpy as np
-import os
 
 # Kestrel analytics default paths
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"
@@ -15,11 +15,12 @@ class PlotFailure(Exception):
 
 x_col = os.environ.get('XPARAM')
 y_col = os.environ.get('YPARAM')
-if not x_col or not y_col:
+if not x_col and not y_col:
     raise Exception('No X or Y parameter specified')
 
+
 def is_numeric(df, column):
-    if column.endswith('_id') or column.endswith('_port'):
+    if column.endswith('_id') or column == 'pid':
         return False
     if str(df[column].dtype) in ['Int32', 'Int64']:
         return True
@@ -44,6 +45,8 @@ def is_timestamp(series):
 
 
 def feature_type(df, column):
+    if not column:
+        return None
     ftype = 'categorical'
     if str(df[column].dtype).startswith('datetime') or is_timestamp(df[column]):
         ftype = 'timestamp'
@@ -112,6 +115,7 @@ def analytics(df):
             fig = df.plot.scatter(x=x_col, y=y_col).get_figure()
         elif x_ftype == 'categorical':
             # area plot
+            # Q: why area?  Sometimes a simple bar plot would be more useful.
             fig = df.plot.area(x=x_col, y=y_col, stacked=False).get_figure()
         elif x_ftype == 'timestamp':
             # time chart
@@ -124,12 +128,17 @@ def analytics(df):
             # time chart
             ts = timeseries(df, x_col, y_col)
             fig = ts.plot.line(y=y_col).get_figure()
+        elif not x_ftype:
+            fig = df[y_col].value_counts().plot(kind='barh').get_figure()
         else:
             raise PlotFailure(f'Not implemented: no plot type for "{y_ftype}" over "{x_ftype}"')
     elif y_ftype == 'timestamp':
         raise PlotFailure(f'Unsupported YPARAM feature type "{y_ftype}" for {y_col}')
+    elif not y_ftype and x_ftype == 'categorical':
+        fig = df[x_col].value_counts().plot(kind='bar').get_figure()
     else:
-        raise PlotFailure(f'Unknown YPARAM feature type "{y_ftype}" for {y_col}')
+        msg = f' for {y_col}' if y_col else ''
+        raise PlotFailure(f'Unknown YPARAM feature type "{y_ftype}"{msg}')
     return fig
 
 
