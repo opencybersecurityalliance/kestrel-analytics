@@ -2,7 +2,7 @@
 #               Kestrel Analytics: Attribute Plot
 #
 # Build the analytics container:
-#   docker build -t kestrel-attrib-plot .
+#   docker build -t kestrel-analytics-attrib-plot .
 #
 ################################################################
 

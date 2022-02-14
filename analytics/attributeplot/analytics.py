@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
+import os
 import pandas as pd
 import numpy as np
-import os
 
 # Kestrel analytics default paths
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"
@@ -13,13 +13,8 @@ class PlotFailure(Exception):
     pass
 
 
-x_col = os.environ.get('XPARAM')
-y_col = os.environ.get('YPARAM')
-if not x_col or not y_col:
-    raise Exception('No X or Y parameter specified')
-
 def is_numeric(df, column):
-    if column.endswith('_id') or column.endswith('_port'):
+    if column.endswith('_id') or column == 'pid':
         return False
     if str(df[column].dtype) in ['Int32', 'Int64']:
         return True
@@ -44,6 +39,10 @@ def is_timestamp(series):
 
 
 def feature_type(df, column):
+    if not column:
+        return None
+    if isinstance(column, list):
+        return [feature_type(df, c) for c in column]
     ftype = 'categorical'
     if str(df[column].dtype).startswith('datetime') or is_timestamp(df[column]):
         ftype = 'timestamp'
@@ -101,36 +100,93 @@ def timeseries(df, on, col, rule=None, func=pd.Series.count):
     return ts.resample(rule, on='timestamp').apply(func)
 
 
-def analytics(df):
-    x_ftype = feature_type(df, x_col)
-    y_ftype = feature_type(df, y_col)
-    fig = None
+PLOT_MATRIX = {
+    'categorical': {
+        'categorical': None,
+        'numerical': 'area',
+        'timestamp': None,
+        'None': 'count_x',
+    },
+    'numerical': {
+        'categorical': None,
+        'numerical': 'scatter',
+        'timestamp': None,
+        'None': 'box',
+    },
+    'timestamp': {
+        'categorical': 'time_count',
+        'numerical': 'time_sum',
+        'timestamp': None,
+        'None': None,
+    },
+    'None': {
+        'categorical': 'count_y',
+        'numerical': None,
+        'timestamp': None,
+        'None': None,
+    }
+}
 
-    if y_ftype == 'numerical':
-        if x_ftype == 'numerical':
-            # scatterplot
-            fig = df.plot.scatter(x=x_col, y=y_col).get_figure()
-        elif x_ftype == 'categorical':
-            # area plot
-            fig = df.plot.area(x=x_col, y=y_col, stacked=False).get_figure()
-        elif x_ftype == 'timestamp':
-            # time chart
-            ts = timeseries(df, x_col, y_col, func=sum)
-            fig = ts.plot.line(y=y_col).get_figure()
-        else:
-            raise PlotFailure(f'Unknown XPARAM feature type "{x_ftype}" for {x_col}')
-    elif y_ftype == 'categorical':
-        if x_ftype == 'timestamp':
-            # time chart
-            ts = timeseries(df, x_col, y_col)
-            fig = ts.plot.line(y=y_col).get_figure()
-        else:
-            raise PlotFailure(f'Not implemented: no plot type for "{y_ftype}" over "{x_ftype}"')
-    elif y_ftype == 'timestamp':
-        raise PlotFailure(f'Unsupported YPARAM feature type "{y_ftype}" for {y_col}')
-    else:
-        raise PlotFailure(f'Unknown YPARAM feature type "{y_ftype}" for {y_col}')
-    return fig
+
+def area(df, x, y):
+    """Create an area plot"""
+    return df.plot.bar(x=x, y=y, stacked=False).get_figure()
+
+
+def box(df, x, y):
+    """Create one or more box plots"""
+    return df.boxplot(column=x).get_figure()
+
+
+def count_x(df, x, y):
+    """Create a bar plot of the count of `x` values"""
+    return df[x].value_counts().plot(kind='bar').get_figure()
+
+
+def count_y(df, x, y):
+    """Create a horizontal bar plot of the count of `y` values"""
+    return df[y].value_counts().plot(kind='barh').get_figure()
+
+
+def scatter(df, x, y):
+    """Create a scatter plot"""
+    return df.plot.scatter(x=x, y=y).get_figure()
+
+
+def time_chart(df, x, y, func):
+    ts = timeseries(df, x, y, func=func)
+    return ts.plot.line(y=y).get_figure()
+
+
+def time_count(df, x, y):
+    """Create a timechart with the count of `y` values per time period"""
+    return time_chart(df, x, y, pd.Series.count)
+
+
+def time_sum(df, x, y):
+    """Create a timechart with the sum of `y` values per time period"""
+    return time_chart(df, x, y, sum)
+
+
+def analytics(df):
+    x_col = os.environ.get('XPARAM')
+    y_col = os.environ.get('YPARAM')
+    if not x_col and not y_col:
+        raise Exception('No X or Y parameter specified')
+
+    if x_col and ',' in x_col:
+        x_col = x_col.split(',')
+    x_ftype = feature_type(df, x_col)
+    if isinstance(x_ftype, list):
+        ftypes = set(x_ftype)
+        if len(ftypes) > 1:
+            raise PlotFailure(f'Not implemented: no plot type for "{x_ftype}" (must be single type)')
+        x_ftype = x_ftype[0]
+    y_ftype = feature_type(df, y_col)
+    plot_type = PLOT_MATRIX[str(x_ftype)][str(y_ftype)]
+    if plot_type:
+        return globals()[plot_type](df, x_col, y_col)
+    raise PlotFailure(f'Not implemented: no plot type for "{y_ftype}" over "{x_ftype}"')
 
 
 if __name__ == "__main__":
