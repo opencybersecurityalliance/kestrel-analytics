@@ -8,7 +8,7 @@ profiles:
     domain-enrichment:
         module: ~/kestrel-analytics/analytics/domainnamelookup/annotateip.py
         func: analytics
-    log4shell-deobfuscation:
+    log4shell-deobfuscation-and-detection:
         module: ~/kestrel-analytics/analytics/log4shell/analytics.py
         func: analytics
     pin-IP-on-map:
