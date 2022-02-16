@@ -1,0 +1,24 @@
+profiles:
+    attribute-plot:
+        module: ~/kestrel-analytics/analytics/attributeplot/analytics.py
+        func: analytics
+    exfiltration-modeling:
+        module: ~/kestrel-analytics/analytics/dataexfiltration/analytics.py
+        func: analytics
+    domain-enrichment:
+        module: ~/kestrel-analytics/analytics/domainnamelookup/annotateip.py
+        func: analytics
+    log4shell-deobfuscation:
+        module: ~/kestrel-analytics/analytics/log4shell/analytics.py
+        func: analytics
+    pin-IP-on-map:
+        module: ~/kestrel-analytics/analytics/piniponmap/analytics.py
+        func: analytics
+    SANS-enrich:
+        module: ~/kestrel-analytics/analytics/sansipenrich/analytics.py
+        func: analytics
+    suspicious-process-scoring:
+        module: ~/kestrel-analytics/analytics/suspiciousscoring/analytics.py
+        func: analytics
+
+
