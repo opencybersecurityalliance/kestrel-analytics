@@ -117,7 +117,7 @@ PLOT_MATRIX = {
         "categorical": None,
         "numerical": "scatter",
         "timestamp": None,
-        "None": "box",
+        "None": "dist_x",
     },
     "timestamp": {
         "categorical": "time_count",
@@ -127,7 +127,7 @@ PLOT_MATRIX = {
     },
     "None": {
         "categorical": "count_y",
-        "numerical": None,
+        "numerical": "dist_y",
         "timestamp": None,
         "None": None,
     },
@@ -139,9 +139,21 @@ def area(df, x, y):
     return df.plot.bar(x=x, y=y, stacked=False).get_figure()
 
 
-def box(df, x, y):
-    """Create one or more box plots"""
-    return df.boxplot(column=x).get_figure()
+def dist(df, col):
+    """Create a histogram or box plots (if `col` is a list)"""
+    if isinstance(col, list):
+        return df.boxplot(column=col).get_figure()
+    return df[col].plot(kind="hist").get_figure()
+
+
+def dist_x(df, x, y):
+    """Create a histogram or box plots (if `x` is a list)"""
+    return dist(df, x)
+
+
+def dist_y(df, x, y):
+    """Create a histogram or box plots (if `y` is a list)"""
+    return dist(df, y)
 
 
 def count_x(df, x, y):
