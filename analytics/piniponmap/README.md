@@ -6,10 +6,13 @@ This analytics retrieves all IP addresses in `network-traffic` or
 `ipv4-addr` entities, check their geolocation, and then pin the geolocation
 on a map to return.
 
+This product includes GeoLite2 data created by MaxMind, available from
+<a href="https://www.maxmind.com">https://www.maxmind.com</a>.
+
 ## Requirement
 
-Get your copy of `GeoLite2-City.mmdb` from
-[MAXMIND](https://dev.maxmind.com/geoip/geoip2/geolite2/). Put it in this
+Download the latest geolocation database `GeoLite2-City.mmdb` from
+[MAXMIND](https://dev.maxmind.com/geoip/geoip2/geolite2/), and put it in this
 directory.
 
 ## Building The Analytics
