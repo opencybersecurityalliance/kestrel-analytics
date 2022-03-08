@@ -1,4 +1,15 @@
-"""Dynamically generating business-rules variables when the rules operate on a dict."""
+"""Dynamically generate business-rules variables when the rules
+operate on a dict.
+
+This is a wrapper/specialization of
+https://github.com/venmo/business-rules that only works with dict
+inputs.
+
+We should replace business-rules with something better.  It uses a
+naive matching algorithm that won't scale well.  It also completely
+lacks negation, and hasn't been updated since 2016!
+
+"""
 
 
 from business_rules.actions import rule_action, BaseActions
@@ -6,8 +17,19 @@ from business_rules.engine import run_all
 from business_rules.fields import FIELD_TEXT, FIELD_NUMERIC
 from business_rules.operators import NumericType
 from business_rules.operators import StringType
+from business_rules.operators import type_operator
 from business_rules.utils import fn_name_to_pretty_label
 from business_rules.variables import BaseVariables
+
+
+# Need to create a not_equal_to for StringType
+@type_operator(FIELD_TEXT)
+def str_not_equal_to(self, other_string):
+    return self.value != other_string
+
+
+# Add the new method
+setattr(StringType, 'not_equal_to', str_not_equal_to)
 
 
 # internal ctor to be used by RuleVariables class

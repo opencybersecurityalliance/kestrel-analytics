@@ -119,10 +119,13 @@ def analytics(df):
         pattern = fnmatch.translate(pattern)
 
         # Find all matching rows and convert boolean result to 0 or 1
-        score = df['command_line'].str.contains(pattern, na=False).astype(int)
+        if 'command_line' in df.columns:
+            score = df['command_line'].str.contains(pattern, na=False).astype(int)
 
-        # Add to score column
-        df["x_suspicious_score"] += score
+            # Add to score column
+            df["x_suspicious_score"] += score
+        else:
+            df["x_suspicious_score"] = 0
 
     # analytics second step
     # - check how many network connection with each x_guid
