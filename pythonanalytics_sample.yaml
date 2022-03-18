@@ -17,8 +17,9 @@ profiles:
     SANS-enrich:
         module: ~/kestrel-analytics/analytics/sansipenrich/analytics.py
         func: analytics
+    scikit-learn-clustering:
+        module: ~/kestrel-analytics/analytics/sklearn-cluster/analytics.py
+        func: analytics
     suspicious-process-scoring:
         module: ~/kestrel-analytics/analytics/suspiciousscoring/analytics.py
         func: analytics
-
-
