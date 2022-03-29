@@ -3,6 +3,7 @@
 import ast
 import os
 
+import gower
 import pandas as pd
 from sklearn.cluster import DBSCAN, KMeans
 
@@ -17,17 +18,37 @@ METHODS = {
     'kmeans': (KMeans, {p:v for p, v in os.environ.items() if p in KMeans()._get_param_names()}),
 }
 
-COLS = os.environ['columns']
+COLS = os.environ.get('columns')
 METHOD = os.environ.get('method', 'kmeans')
+
+
+def mixed_columns(df, cols):
+    dtypes = set(df[cols].dtypes.apply(str).tolist())
+    return 'object' in dtypes
 
 
 def analytics(df):
     # Process our parameters
-    cols = COLS.split(',')
-    method = METHOD.lower()
+    if COLS:
+        cols = COLS.split(',')
+    else:
+        cols = list(df.columns)
+    mixed =  mixed_columns(df, cols)
+    if mixed:
+        # Can ONLY use dbscan
+        method = 'dbscan'
+    else:
+        method = METHOD.lower()
     algo, params = METHODS[method]
     params = {p: int(v) if v.isdigit() else v for p, v in params.items()}
-    model = algo(**params).fit(df[cols])
+
+    if mixed:
+        params['metric'] = 'precomputed'
+        dist_matrix = gower.gower_matrix(df[cols])
+        model = algo(**params).fit(dist_matrix)
+    else:
+        model = algo(**params).fit(df[cols])
+
     df['cluster'] = model.labels_
 
     # return the updated Kestrel variable
