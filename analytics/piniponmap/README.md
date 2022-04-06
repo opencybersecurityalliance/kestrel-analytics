@@ -6,8 +6,7 @@ This analytics retrieves all IP addresses in `network-traffic` or
 `ipv4-addr` entities, check their geolocation, and then pin the geolocation
 on a map to return.
 
-This product includes GeoLite2 data created by MaxMind, available from
-<a href="https://www.maxmind.com">https://www.maxmind.com</a>.
+This product is designed to consume GeoLite2 data created by MaxMind, available under [GeoLite2 License](https://www.maxmind.com/en/geolite2/eula).
 
 ## Requirement
 
