@@ -23,3 +23,6 @@ profiles:
     suspicious-process-scoring:
         module: ~/kestrel-analytics/analytics/suspiciousscoring/analytics.py
         func: analytics
+    xfe-enrich:
+        module: ~/kestrel-analytics/analytics/xfeipenrich/analytics.py
+        func: analytics
