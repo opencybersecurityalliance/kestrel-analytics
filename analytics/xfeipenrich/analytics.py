@@ -53,7 +53,7 @@ def get_xfe_ip_enrich(key, ips):
                         cat = cat[:-1]    
                     result[f"x_{key}_{c}"].append(cat)
                 else:
-                    if c not in data['ip']:
+                    if c not in data:
                         result[f"x_{key}_{c}"].append(None)
                     else:
                         result[f"x_{key}_{c}"].append(data[c])
