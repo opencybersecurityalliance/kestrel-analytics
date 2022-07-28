@@ -40,6 +40,7 @@ def analytics(dataframe):
         ips = src_ips + dst_ips
     else:
         ips = []
+    ips = [ip for ip in ips if ip]
     viz = visualize_ips(ips)
     disp = DisplayFormatter()
     html = disp.format(viz)[0]['text/html']
