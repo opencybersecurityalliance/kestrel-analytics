@@ -14,7 +14,7 @@ Python != PowerShell.  There are still some issues here:
 import base64
 import re
 from io import BytesIO
-from tokenize import tokenize, DEDENT, ENCODING, INDENT, NAME, NUMBER, OP, STRING
+from tokenize import tokenize, TokenInfo, DEDENT, ENCODING, ERRORTOKEN, INDENT, NAME, NUMBER, OP, STRING
 
 # Use these to extract the encoded part
 BASE64_RE = r"'?([A-Za-z\d/\+]+={0,2})'?"
@@ -92,6 +92,96 @@ OPERATORS = [
 ]
 
 
+def pstokenize(data: str):
+    """
+    A generator that's a wrapper around Python's tokenize, adapting it
+    to handle PowerShell.
+
+    """
+    stack = []
+
+    # (ab)use the Python built-in tokenizer (which is for Python, not PowerShell)
+    for token in tokenize(BytesIO(data.encode("utf-8")).readline):
+        if token.type in (ENCODING, INDENT, DEDENT):
+            continue
+        if token.type == NAME:
+            if stack:
+                prev = stack[-1]
+                if prev.type == OP and prev.string == '-':
+                    if len(stack) == 2:
+                        # Found a CmdLet!
+                        first = stack[0]
+                        stack = []
+                        value = ''.join([t.string for t in (first, prev, token)])
+                        yield TokenInfo(OP, value, first.start, token.end, token.line)
+                    else:
+                        # Operator
+                        stack.pop()
+                        yield TokenInfo(OP, '-' + token.string, prev.start, token.end, token.line)
+                elif prev.type == NAME or prev.string == '$':
+                    # Merge
+                    stack.pop()
+                    stack.append(TokenInfo(NAME, prev.string + token.string, prev.start, token.end, token.line))
+                else:
+                    # Stash it and look ahead
+                    stack.append(token)
+            else:
+                # Stash it and look ahead
+                stack.append(token)
+        elif token.type == NUMBER:
+            if stack:
+                prev = stack[-1]
+                if prev.type == NAME or prev.string == '$':
+                    # Merge
+                    stack.pop()
+                    stack.append(TokenInfo(NAME, prev.string + token.string, prev.start, token.end, token.line))
+                else:
+                    # Error?  Flush the stack.
+                    for old in stack:
+                        yield old
+                    stack = []
+                    yield token
+            else:
+                yield token
+        elif token.type == OP and token.string == '-':
+            # Check stack to see if it's a cmdlet
+            if stack:
+                prev = stack[-1]
+                if token.start == prev.end and not prev.string.startswith('$'):
+                    # it's cmdlet
+                    stack.append(token)
+                else:
+                    # there was whitespace, so this must be an operator
+                    # Pop previous and push this one
+                    stack.pop()
+                    stack.append(token)
+                    yield prev
+            else:
+                # Need to save it
+                stack.append(token)
+        elif token.type == ERRORTOKEN and token.string == '$':
+            # Starting a var?
+            if stack:
+                # Error?  Flush the stack.
+                for old in stack:
+                    yield old
+                stack = []
+            stack.append(token)
+        elif token.type == ERRORTOKEN and token.string == ' ':
+            pass  # Not sure what happened here
+        else:
+            for old in stack:
+                yield old
+            stack = []
+            yield token
+
+
+def itoa(match):
+    i = int(match.group(1))
+    c = chr(i)
+    return f"'{c}'"
+
+
 def reformat(input_script):
     """
     Try to format/pretty-print `input_script`, which should be PowerShell code.
@@ -110,78 +200,57 @@ def reformat(input_script):
     def newline():
         return f'\n{indent * TAB}'
 
-    prev = None
-    prevtype = None
-
-    # (ab)use the Python built-in tokenizer (which is for Python, not PowerShell)
-    for toktype, tokval, _, _, _ in tokenize(BytesIO(input_script.encode("utf-8")).readline):
+    for toktype, tokval, _, _, _ in pstokenize(input_script):
         val = tokval
-        if toktype == ENCODING:
+        pre = ''
+        post = ''
+        if toktype in (ENCODING, INDENT, DEDENT):
             continue
-        if toktype in (INDENT, DEDENT):
-            val = ''
-        elif tokval == '}':
+        if tokval == '}':
             indent = 0 if indent <= 0 else indent - 1  # De-indent a level
-            val = newline() + tokval + newline()
+            pre = newline()
+            post = newline()
         elif tokval == '{':
             indent += 1
-            if check_last(' '):
-                val = ''
-            else:
-                val = ' '
-            val += tokval + newline()
+            pre = ' '
+            post = newline()
         elif tokval == ';':
             if check_last('\n'):
                 val = ''
             else:
-                val += newline()
+                post = newline()
         elif toktype == NAME:
             val = tokval.lower()
-            if val in KEYWORDS and prev != '$':
-                val = f'{val} '
-            elif val in LITERALS:
-                pass  # We already made it lower case
-            elif val in OPERATORS:
-                if prev == '-':
-                    val = f'{val} '
-                    # HACK: ensure a space in output *before* the dash:
-                    output_script = output_script[:-1] + ' -'
-            elif prev == '$':
-                val = tokval.upper()  # Should we instead preserve case for var names?
-            elif prevtype == NAME:
-                val = f' {val}'
+            if val in KEYWORDS:
+                post = ' '
         elif toktype == STRING:
             if tokval[0] == '"':
                 # Process nonsense escapes
                 val = re.sub(r'`([^abefnrtuv0])', r'\1', tokval)
                 if check_last('.'):  # For things like blah."GetField"(...)
                     val = val.strip('"').lower()
-                elif not check_last(' '):
-                    val = f' {val}'
+            pre = post = ''
+        elif tokval in [',']:
+            # Only want a space after, not before
+            pre = ''
+            post = ' '
+        elif tokval in ['.', '(', ')', '[', ']', "'", ':']:
+            # No spaces
+            pre = post = ''
         elif toktype == OP:
-            # Add spaces around operators
-            if val in ['+', '/', '*', '%', '=', '!=', '|']:
-                # Add space before if necessary
-                if check_last(' '):
-                    pre = ''
-                else:
-                    pre = ' '
-                val = f'{pre}{val} '
-            elif val == ',':
-                # Only want a space after, not before
-                val = f'{val} '
-            elif val == '-':
-                # Tricky, since it's used for operators like -ge
-                if prevtype == NUMBER:
-                    val = f' {val} '
-                #else:
-                #    val = f' {val}'
+            val = tokval.lower()  # For things like -ge
+            pre = post = ' '
 
-        prev = tokval  # Save previous token
-        prevtype = toktype
+        if pre and (check_last(pre) or len(output_script) == 0):
+            pre = ''
+        output_script += pre
         output_script += val
+        output_script += post
 
     ### Post-processing substitions
+
+    # ASCII encoding
+    output_script = re.sub(r'\[char\]([0-9]+)', itoa, output_script)
 
     # String concatention
     output_script = output_script.replace("' + '", '')
