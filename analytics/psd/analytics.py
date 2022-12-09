@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import html
 import re
 
 import pandas as pd
@@ -44,6 +45,7 @@ def analytics(df):
             continue
         # Each row should be a process SCO, but don't require an id, just in case
         oid = row.get('id', '')
+        data = html.escape(data)
         display += f"<br/>Row {index + 1}: {oid}\n<hr/>\n<pre>\n{data}</pre>\n\n"
 
     # return the updated Kestrel variable
