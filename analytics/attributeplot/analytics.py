@@ -134,6 +134,11 @@ PLOT_MATRIX = {
 }
 
 
+def bar(df, x, y):
+    """Create a simple plot"""
+    return df.plot.bar(x=x, y=y, stacked=False).get_figure()
+
+
 def area(df, x, y):
     """Create an area plot"""
     return df.plot.bar(x=x, y=y, stacked=False).get_figure()
@@ -189,6 +194,7 @@ def time_sum(df, x, y):
 def analytics(df):
     x_col = os.environ.get("XPARAM")
     y_col = os.environ.get("YPARAM")
+    plot_type = os.environ.get("PLOTTYPE")
     if not x_col and not y_col:
         raise Exception("No X or Y parameter specified")
 
@@ -203,7 +209,9 @@ def analytics(df):
             )
         x_ftype = x_ftype[0]
     y_ftype = feature_type(df, y_col)
-    plot_type = PLOT_MATRIX[str(x_ftype)][str(y_ftype)]
+
+    if not plot_type:
+        plot_type = PLOT_MATRIX[str(x_ftype)][str(y_ftype)]
     if plot_type:
         return globals()[plot_type](df, x_col, y_col)
     raise PlotFailure(f'Not implemented: no plot type for "{y_ftype}" over "{x_ftype}"')
