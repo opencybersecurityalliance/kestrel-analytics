@@ -49,5 +49,5 @@ connections_t=TIMESTAMPED(connections)
 users_t=TIMESTAMPED(users)
 observations = GET observed-data FROM stixshifter://database WHERE [user-account:user_id != null]
 observations_sorted = SORT observations BY first_observed ASC
-APPLY docker://detect_lateral_movement ON observations_sorted, users_t, connections_t WITH ku=60, ks=60, kd=60
+APPLY docker://detect_lm ON observations_sorted, users_t, connections_t WITH ku=60, ks=60, kd=60
 ```
