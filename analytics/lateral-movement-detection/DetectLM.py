@@ -4,7 +4,7 @@ import pickle
 import ipaddress
 import numpy as np
 import pandas as pd
-import datetime
+import datetime as dt
 import sklearn.cluster as cluster
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
@@ -23,14 +23,9 @@ kd = int(os.environ["kd"])
 
 def process(data):
     # need a method call to find weekday
-    data["timestamp"] = data.apply(
-        lambda x: time.mktime(
-            datetime.datetime.strptime(
-                x["first_observed"], "%Y-%m-%dT%H:%M:%S.%fZ"
-            ).timetuple()
-        ),
-        axis=1,
-    )
+    data["timestamp"] = pd.to_datetime(
+        data["first_observed"], unit="ms", infer_datetime_format=True
+    ).dt.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     data["timeofweek"] = data.apply(
         lambda row: (row["timestamp"] // 3600 + 24 * 2) % 168, axis=1
     )
