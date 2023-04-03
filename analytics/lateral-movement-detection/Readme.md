@@ -48,6 +48,10 @@ connections=FIND network-traffic LINKED users
 connections_t=TIMESTAMPED(connections)
 users_t=TIMESTAMPED(users)
 observations = GET observed-data FROM stixshifter://database WHERE [user-account:user_id != null]
-observations_sorted = SORT observations BY first_observed ASC
-APPLY docker://detect_lm ON observations_sorted, users_t, connections_t WITH ku=60, ks=60, kd=60
+APPLY docker://detect_lm ON observations, users_t, connections_t WITH ku=60, ks=60, kd=60
 ```
+
+##More Information
+
+For more information regarding this kestrel analytics including using it, you can refer to my online article in the following link:
+https://opencybersecurityalliance.org/kestrel-analytics-lateral-movement/ 
