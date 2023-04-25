@@ -39,15 +39,17 @@ This Kestrel analytics can be built using the following command:
 ```
 docker build -t kestrel-analytics-detect_lm .
 ```
-In the following, we can show that how our Kestrel analytics can be applied when we have a table in a database in which the information of the authentication requests has been stored
-in an ascending order for the time of requests. Note that the output of transformer TIMESTAMPED has the same order with the table of database, but that is not the case for the output of
-the GET command. Thus, we need to sort the varibale which includes Cyber-Observables before applying docker.
+In the following, we can show that how our Kestrel analytics can be applied via Docker interface. Note that you cannot use this Kestrel analytics via a Python analytics interface. 
 ```
 users=GET user-account FROM stixshifter://database WHERE [user-account:user_id != null]
 connections=FIND network-traffic LINKED users
 connections_t=TIMESTAMPED(connections)
 users_t=TIMESTAMPED(users)
 observations = GET observed-data FROM stixshifter://database WHERE [user-account:user_id != null]
-observations_sorted = SORT observations BY first_observed ASC
-APPLY docker://detect_lm ON observations_sorted, users_t, connections_t WITH ku=60, ks=60, kd=60
+APPLY docker://detect_lm ON observations, users_t, connections_t WITH ku=60, ks=60, kd=60
 ```
+
+##More Information
+
+For more information regarding this kestrel analytics including using it, you can refer to my online article in the following link:
+https://opencybersecurityalliance.org/kestrel-analytics-lateral-movement/ 
