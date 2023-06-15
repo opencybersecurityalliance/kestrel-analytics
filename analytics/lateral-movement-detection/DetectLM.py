@@ -227,17 +227,14 @@ if __name__ == "__main__":
     out = pd.read_parquet(DATA_PATH)
     in1 = pd.read_parquet(DATA_PATH_1)
     in2 = pd.read_parquet(DATA_PATH_2)
-    out['index1'] = out.index
     
-    #data=pd.merge(in1,in2, how='inner', on =['first_observed'])
-    data=pd.merge(in1,in2, left_index=True, right_index=True)
-    data['index1'] = data.index
-    data['first_observed']=data['first_observed_x']
-    data['id']=data['id_x']
+    data=pd.merge(in1,in2, on ='id')
+    data=pd.merge(data,out[['id', 'first_observed']], on ='id')
+    data.set_index('id')
+  
     data['source']=data['src_ref.value']
     data['destination']=data['dst_ref.value']
     data['username']=data['user_id']
-    #dfdata['domain']=dfdata['objects.3.value']
 
     dftest=data[data['status'].astype(str).str.match('unknown')].copy()        
     dftrain=data[data['status'].astype(str).str.match('benign')].copy()                                                      
@@ -255,18 +252,14 @@ if __name__ == "__main__":
     dftest=pd.merge(csources[['source','c_src']],dftest, how='right', on = ['source'])
     dftest=pd.merge(cusernames[['username','c_usr']],dftest, how='right', on = ['username'])
     dftest=pd.merge(cdestination[['destination','c_dst']],dftest, how='right', on = ['destination'])
-    dftest=pd.merge(dftrain[['c_usr','c_src','c_dst','status']].drop_duplicates(),dftest[['index1','first_observed','source','destination','username','c_usr','c_src','c_dst']], how='right', on = ['c_usr','c_src','c_dst'])
+    dftest=pd.merge(dftrain[['c_usr','c_src','c_dst','status']].drop_duplicates(),dftest[['id','first_observed','source','destination','username','c_usr','c_src','c_dst']], how='right', on = ['c_usr','c_src','c_dst'])
     
     dftest['status'] = dftest['status'].fillna('malicious')
     dftest['c_usr'] = dftest['c_usr'].fillna(-1)
     dftest['c_src'] = dftest['c_src'].fillna(-1)
-    dftest['c_dst'] = dftest['c_dst'].fillna(-1)
-    
-    #data=pd.merge(data[['first_observed','source','destination','username']],dftest,how='right', on = ['source','destination','username'])
-    data=pd.concat([dftrain[['index1','first_observed','source','destination','username','c_usr','c_src','c_dst','status']],dftest[['index1','first_observed','source','destination','username','c_usr','c_src','c_dst','status']]],ignore_index=True)
- 
-    out['first_observed']=data['first_observed']
-    out=pd.merge(out,data[['index1','username','c_usr','source','c_src','destination','c_dst','status']], how='inner', on =['index1'])
+    dftest['c_dst'] = dftest['c_dst'].fillna(-1) 
+    data=pd.concat([dftrain[['id','first_observed','source','destination','username','c_usr','c_src','c_dst','status']],        dftest[['id','first_observed','source','destination','username','c_usr','c_src','c_dst','status']]],ignore_index=True)
+    out=pd.merge(out,data[['id','username','c_usr','source','c_src','destination','c_dst','status']], on ='id')
     
     out.to_parquet(OUTPUT_DATA_PATH, compression="gzip")
 

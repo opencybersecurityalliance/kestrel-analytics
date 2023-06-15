@@ -49,7 +49,8 @@ if __name__ == "__main__":
     out = pd.read_parquet(DATA_PATH)
     in1 = pd.read_parquet(DATA_PATH_1)
     in2 = pd.read_parquet(DATA_PATH_2)  
-    data=pd.merge(in1,in2, left_index=True, right_index=True)
+    data=pd.merge(in1,in2, on='id')
+    data=pd.merge(data, out[['id', 'first_observed']], on='id')
     data = data.reset_index()  # make sure indexes pair with number of rows
     G = nx.Graph()
     for index, row in data.iterrows():
@@ -65,15 +66,13 @@ if __name__ == "__main__":
 
 
     output=evaluate_embeddings(embeddings, data)
-    out['index1'] = out.index
-    output['index1']=output.index
-    #in2['index1']=in2.index
+  
     
     #changing out
     output['source']=output['src_ref.value']
     output['destination']=output['dst_ref.value']
-    out['first_observed']=output['first_observed_x']
-    out=pd.merge(out,output[['index1','source', 'destination', 'user_id', 'status']], how='inner', on =['index1'])
+
+    out=pd.merge(out,output[['id','source', 'destination', 'user_id', 'status']], on =['id'])
     #out=output
     out.to_parquet(OUTPUT_DATA_PATH, compression="gzip")
 

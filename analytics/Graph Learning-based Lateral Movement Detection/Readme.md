@@ -13,10 +13,7 @@ involved in each authentication request. Security analysts can use this Kestrel 
 
 ## Arguments
 
-This Kestrel analytics should be applied on a variable which includes STIX Cyber-Observable objects and two tables which are obtained after applying the TIMESTAMPED transformer
-on two variables which include the "user-account" and "network-traffic" objects. The first table includes identifiers of the users who have initiated the requests while the second table
-shows which host have been involved in each authentication request and the status of the authentication request. Initially, the property "status" of a "network-traffic" object is assigned
-to "unknown" or "benign". 
+This Kestrel analytics should be applied on a variable which includes STIX Cyber-Observable objects and two tables which are obtained after applying the ADDOBSID transformer on two variables which include the "user-account" and "network-traffic" objects. The first table includes identifiers of the users who have initiated the requests while the second table shows which host have been involved in each authentication request and the status of the authentication request. Initially, the property "status" of a "network-traffic" object is assigned to "unknown" or "benign". 
 
 
 ## Parameters
@@ -30,16 +27,14 @@ This Kestrel analytics can be built using the following command:
 ```
 docker build -t kestrel-analytics-detect_lm .
 ```
-In the following, we can show that how our Kestrel analytics can be applied when we have a table in a database in which the information of the authentication requests has been stored
-in an ascending order for the time of requests. Note that the output of transformer TIMESTAMPED has the same order with the table of database, but that is not the case for the output of
-the GET command. Thus, we need to sort the varibale which includes Cyber-Observables before applying docker.
+In the following, we can show that how our Kestrel analytics can be applied when we have a table in a database in which the information of the authentication requests has been stored.
 ```
 users=GET user-account FROM stixshifter://database WHERE [user-account:user_id != null]
 connections=FIND network-traffic LINKED users
-connections_t=TIMESTAMPED(connections)
-users_t=TIMESTAMPED(users)
+connections_obs=ADDOBSID(connections)
+users_obs=ADDOBSID(users)
 observations = GET observed-data FROM stixshifter://database WHERE [user-account:user_id != null]
-APPLY docker://detect_lm ON observations, users_t, connections_t WITH walkLength=3, classifier=xgboost
+APPLY docker://detect_lm ON observations, users_obs, connections_obs WITH walkLength=3, classifier=xgboost
 ```
 
 ##More Information
