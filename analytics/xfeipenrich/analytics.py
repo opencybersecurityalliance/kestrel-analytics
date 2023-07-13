@@ -1,26 +1,33 @@
 #!/usr/bin/env python3
 
+import base64
 import os
-import pandas as pd
+import time
 import requests
-from datetime import datetime
-import base64, time
-import json
+
+import pandas as pd
+
 # Kestrel analytics default paths
 INPUT_DATA_PATH = "/data/input/0.parquet.gz"
 OUTPUT_DATA_PATH = "/data/output/0.parquet.gz"
 
 xfe_cred = os.environ.get("XFE_CRED")
 if not xfe_cred:
-    raise Exception('No API credentials!')
+    raise Exception('No XFE API credentials found in XFE_CRED!')
 ENRICH_COLUMNS = ['cats', 'score', 'geo']
 
 XFE_URL = "https://api.xforce.ibmcloud.com"
+
+
 def get_xfe_ip_enrich(key, ips):
     ipurl = XFE_URL + "/ipr/"
-    cred  = str(xfe_cred.value).strip('\"')
+    cred  = xfe_cred.strip('\"')
     token = base64.b64encode(cred.encode())
-    headers = {'Authorization': "Basic " + str(token.decode()), 'Accept': 'application/json', 'content-type': 'applications/json'}
+    headers = {
+        'Authorization': "Basic " + str(token.decode()),
+        'Accept': 'application/json',
+        'content-type': 'applications/json'
+    }
     result = {f"x_{key}_{c}": [] for c in ENRICH_COLUMNS}
     for _ip in ips:
         iprurl = ipurl + _ip
@@ -28,7 +35,7 @@ def get_xfe_ip_enrich(key, ips):
         if resp.status_code == 401:
             raise Exception('Not Authorized')
         elif resp.status_code == 429:
-            #getting rate limited so sleep.
+            # getting rate limited so sleep.
             for c in ENRICH_COLUMNS:
                 result[f"x_{key}_{c}"].append(None)
             time.sleep(1)
@@ -48,9 +55,9 @@ def get_xfe_ip_enrich(key, ips):
                     cat =""
                     for k in data['cats']:
                         cat = cat + k + ","
-                    #trim last char
-                    if len(data['cats']) >0:  
-                        cat = cat[:-1]    
+                    # trim last char
+                    if len(data['cats']) > 0:
+                        cat = cat[:-1]
                     result[f"x_{key}_{c}"].append(cat)
                 else:
                     if c not in data:
@@ -59,11 +66,12 @@ def get_xfe_ip_enrich(key, ips):
                         result[f"x_{key}_{c}"].append(data[c])
         else:
             raise Exception('API error' + str(ipurl))
-    #return {k: v for k, v in result.items() if len(v)}
+
     return result
 
+
 def analytics(df):
-    columns=[]
+    columns = []
     if df['type'][0] in ['ipv4-addr','ipv6-addr']:
         columns = ["value"]
     elif df['type'][0] == 'network-traffic':
