@@ -4,11 +4,15 @@
 
 The purpose of this analytic is to leverage X-Force Exchange API
 (https://api.xforce.ibmcloud.com/doc/) for threat intel
-enrichment. The following fields from XFE will be kept if they exist:
-'cats', 'score', 'geo'.
+enrichment. Data returned by XFE will be prefixed with 'x_xfe_'.
 
-- IP addresses are enriched.
-- TODO: Enrich Domains, hashes and urls.
+Supported observable types:
+- IP addresses (`ipv4-addr` and `ipv6-addr`)
+  - 'cats', 'score', 'geo' (country), 'company' (from ASN)
+- Domain names (`domain-name`) and URLs (`url`)
+  - 'cats', 'score'
+- Files (`file`, using `hashes.MD5`, `hashes.'SHA-1', or `hashes.'SHA-256'`)
+  - 'risk', 'family'
 
 ## Usage
 
@@ -19,14 +23,14 @@ enrichment. The following fields from XFE will be kept if they exist:
 
 - Build the analytics container:
 ```
-docker build -t kestrel-analytics-xfe_enrich .
+docker build -t kestrel-analytics-xfe-enrich .
 ```
 
-- Commands to trigger xfe_enrich analytics
+- Commands to trigger xfe-enrich analytics
 ```
-nt = GET network-traffic FROM file://samplestix.json where [ipv4-addr:value LIKE '127.0.0.1']
-APPLY docker://xfe_enrich ON foo
-DISP nt
+domains = NEW domain-name [{"value":"opencybersecurityalliance.org"}]
+APPLY docker://xfe-enrich ON domains
+DISP domain
 ```
 
 ### Via Python
@@ -40,7 +44,7 @@ DISP nt
 
 - `APPLY` on a var of type `ipv4-addr`:
 ```
-ips = new ipv4-addr [{"value":"103.115.252.18"}, {"value":"24.116.105.234"}]
+ips = NEW ipv4-addr [{"value":"103.115.252.18"}, {"value":"24.116.105.234"}]
 APPLY python://xfe-enrich on ips
 DISP ips
 ```
